@@ -12,6 +12,8 @@ import {
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const schema = yup
   .object()
@@ -27,13 +29,41 @@ const schema = yup
   })
 
 const ClientPostProject = () => {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const handlePost = (data) => {
-    console.log(data);
-  };
+  const handleAdd = async (data) => {
+    const info = JSON.parse(localStorage.getItem('info'));
+    const clientId = info?._id || info?.id;
+    const finalData = {
+      ...data,
+      clientId,
+      client: clientId,
+      desc: data.description,
+      duration: data.timeline,
+    };
+    const res = await axios.post('http://localhost:9000/client-post-project', finalData);
+ if(res?.data?.success == true){
+  Swal.fire({
+    title:"Post Project",
+    text:res?.data?.message,
+    icon:'success'
+  })
+  reset()
+  } else {
+    Swal.fire({
+      title: "Post Project",
+      text: res?.data?.message,
+      icon: 'error'
+    })
+  }
+}
 
   return (
     <div className="cpp-page py-5">
@@ -63,7 +93,7 @@ const ClientPostProject = () => {
                 Post a New Freelance Project
               </h4>
 
-              <form onSubmit={handleSubmit(handlePost)}>
+              <form onSubmit={handleSubmit(handleAdd)}>
                 <div className="row g-4">
 
                   {/* Project Title */}

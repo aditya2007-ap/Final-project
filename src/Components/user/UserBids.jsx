@@ -1,9 +1,64 @@
 import React from 'react'
+import { FaGavel, FaClock, FaCheckCircle } from 'react-icons/fa'
+
+const myBidsList = [
+  { id: 'BID-901', project: 'React Native Mobile App', amount: '₹45,000', estTime: '14 Days', date: 'Just now', status: 'Pending Review' },
+  { id: 'BID-872', project: 'Full Stack Node.js API Service', amount: '₹30,000', estTime: '10 Days', date: '2 days ago', status: 'Accepted' },
+  { id: 'BID-744', project: 'Figma UI/UX Redesign', amount: '₹25,000', estTime: '7 Days', date: '5 days ago', status: 'Rejected' },
+]
 
 const UserBids = () => {
   return (
-    <div>
-     <h1>User bids</h1> 
+    <div className="container py-5">
+      <div className="row mb-4">
+        <div className="col-12">
+          <span className="dash-eyebrow">Freelancer Dashboard</span>
+          <h2 className="dash-heading d-flex align-items-center gap-2">
+            <FaGavel className="text-primary" /> My Submitted Proposals &amp; Bids
+          </h2>
+        </div>
+      </div>
+
+      <div className="dash-card bg-white p-4 rounded-4 shadow-sm border">
+        <div className="table-responsive">
+          <table className="table dash-table align-middle mb-0">
+            <thead className="table-light">
+              <tr>
+                <th>Bid Reference</th>
+                <th>Project Name</th>
+                <th>Bid Amount</th>
+                <th>Delivery Time</th>
+                <th>Submitted Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {myBidsList.map((bid) => (
+                <tr key={bid.id}>
+                  <td className="fw-bold text-secondary">{bid.id}</td>
+                  <td className="fw-semibold">{bid.project}</td>
+                  <td className="fw-bold text-success">{bid.amount}</td>
+                  <td>{bid.estTime}</td>
+                  <td className="small text-muted">{bid.date}</td>
+                  <td>
+                    <span
+                      className={`badge px-3 py-2 rounded-pill ${
+                        bid.status === 'Accepted'
+                          ? 'bg-success'
+                          : bid.status === 'Rejected'
+                          ? 'bg-danger'
+                          : 'bg-warning text-dark'
+                      }`}
+                    >
+                      {bid.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   )
 }

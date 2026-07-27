@@ -1831,4 +1831,240 @@ h1 {
 
 .cpp-btn-publish:active {
   transform: translateY(0);
-}
+}
+.about-page {
+  background: #f4f5f7;
+  padding: 60px 0 80px;
+  min-height: 70vh;
+}
+
+.about-page-header {
+  margin-bottom: 36px;
+}
+
+.about-page-header .section-sub {
+  margin-bottom: 0;
+}
+
+.about-mission-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px 36px;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
+  margin-bottom: 20px;
+}
+
+.about-mission-card h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.about-mission-card p {
+  color: #4b5563;
+  font-size: 15px;
+  line-height: 1.75;
+  margin-bottom: 12px;
+}
+
+.about-mission-card p:last-child {
+  margin-bottom: 0;
+}
+
+.about-heading-icon {
+  color: #ff5722;
+  font-size: 1.15em;
+  flex-shrink: 0;
+}
+
+.about-stats-row {
+  margin-bottom: 20px;
+}
+
+.about-stat-card {
+  background: #fdf2f0;
+  border-radius: 12px;
+  padding: 28px 20px;
+  text-align: center;
+  height: 100%;
+  transition: transform 0.2s ease;
+}
+
+.about-stat-card:hover {
+  transform: translateY(-3px);
+}
+
+.about-stat-icon {
+  color: #ff5722;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.about-stat-card h3 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #ff5722;
+  margin: 0 0 6px;
+}
+
+.about-stat-card p {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.about-audience-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 28px 30px;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
+  height: 100%;
+}
+
+.about-audience-card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.about-audience-card p {
+  margin: 0;
+  color: #4b5563;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ==========================================================================
+   ZENTORA MODERN UI ENHANCEMENTS & COMPONENT STYLES
+   ========================================================================== */
+
+.transition {
+  transition: all 0.3s ease-in-out;
+}
+
+.hover-top {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-top:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1) !important;
+}
+
+.hover-shadow {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 10px 25px rgba(238, 74, 3, 0.12) !important;
+  transform: translateY(-3px);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Dashboards & Card Utilities */
+.dash-eyebrow {
+  color: #ee4a03;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.dash-heading {
+  font-weight: 800;
+  color: #111827;
+  font-size: 1.75rem;
+  margin-bottom: 24px;
+}
+
+.dash-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f1f5f9;
+}
+
+.dash-table th {
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #e2e8f0;
+  padding: 14px 16px;
+}
+
+.dash-table td {
+  padding: 14px 16px;
+  vertical-align: middle;
+  font-size: 0.95rem;
+}
+
+/* Action Buttons */
+.action-btn {
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  margin-right: 6px;
+}
+
+.action-btn-block {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.action-btn-block:hover {
+  background-color: #dc2626;
+  color: #ffffff;
+}
+
+.action-btn-delete {
+  background-color: #fff1f2;
+  color: #e11d48;
+}
+
+.action-btn-delete:hover {
+  background-color: #e11d48;
+  color: #ffffff;
+}
+
+/* Status Badges */
+.status-ok {
+  background-color: #dcfce7;
+  color: #15803d;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  display: inline-block;
+}
+
+.status-badge-success {
+  background-color: #10b981;
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
