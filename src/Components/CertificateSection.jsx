@@ -2,7 +2,7 @@ import React from 'react'
 
 const CertificateSection = () => {
   return (
-    <div>
+    <div className='py-5'>
       CertificateSection
     </div>
   )
