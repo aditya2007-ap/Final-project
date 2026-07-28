@@ -1,14 +1,8 @@
-import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FaBolt, FaFolderOpen, FaGavel, FaCheckCircle, FaSearch } from 'react-icons/fa'
 
 const UserDashboard = () => {
-  const [info, setInfo] = useState(null)
 
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('info'))
-    setInfo(user)
-  }, [])
 
   return (
     <div className="container py-5">
@@ -17,21 +11,22 @@ const UserDashboard = () => {
         <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
           <div>
             <span className="badge bg-white text-dark mb-2 font-monospace text-uppercase">Freelancer Portal</span>
-            <h1 className="fw-bold mb-1 text-white">Welcome back, {info?.name || 'Freelancer'}!</h1>
+            <h1 className="fw-bold mb-1 text-white">Welcome back, Freelancer!</h1>
             <p className="m-0 text-white-50">Browse available client projects, submit competitive bids, and manage your credit balance.</p>
           </div>
           <div className="bg-white text-dark px-4 py-2 rounded-pill shadow-sm d-flex align-items-center gap-2">
             <FaBolt className="text-warning fs-4" />
             <div>
               <small className="text-muted d-block lh-1">Available Credits</small>
-              <strong className="fs-5">{info?.credit || 10} Credits</strong>
+              <strong className="fs-5 " >10 Credits</strong>
             </div>
           </div>
         </div>
       </div>
 
       {/* Metrics Row */}
-      <div className="row g-4 mb-5">
+
+     <div className="row g-4 mb-5">
         <div className="col-md-3 col-6">
           <div className="card border-0 shadow-sm p-4 rounded-4 bg-white text-center">
             <FaFolderOpen className="text-primary fs-2 mx-auto mb-2" />
@@ -56,7 +51,7 @@ const UserDashboard = () => {
         <div className="col-md-3 col-6">
           <div className="card border-0 shadow-sm p-4 rounded-4 bg-white text-center">
             <FaBolt className="text-danger fs-2 mx-auto mb-2" />
-            <h3 className="fw-bold mb-1">{info?.credit || 10}</h3>
+            <h3 className="fw-bold mb-1">10</h3>
             <span className="text-muted small fw-semibold">Bidding Credits</span>
           </div>
         </div>
@@ -75,7 +70,7 @@ const UserDashboard = () => {
         </div>
 
         <div className="col-md-4">
-          <div className="card border-0 shadow-sm p-4 rounded-4 bg-white h-100">
+          <div className="card border-0 shadow-sm p-4 rou">
             <h5 className="fw-bold mb-2">My Submitted Bids</h5>
             <p className="text-muted small mb-4">Track the status of your active proposals and contract approvals.</p>
             <Link to="/user-bids" className="btn btn-outline-primary w-100 mt-auto fw-semibold d-inline-flex align-items-center justify-content-center gap-2">
@@ -89,13 +84,14 @@ const UserDashboard = () => {
             <h5 className="fw-bold mb-2">Buy Bidding Credits</h5>
             <p className="text-muted small mb-4">Purchase monthly credit packs (Starter, Pro, Elite) to bid on more projects.</p>
             <Link to="/user-plans" className="btn btn-outline-primary w-100 mt-auto fw-semibold d-inline-flex align-items-center justify-content-center gap-2">
-              <FaZap /> Buy Credit Plan
+              < FaGavel/> Buy Credit Plan
             </Link>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+ 
+  )}
+
 
 export default UserDashboard

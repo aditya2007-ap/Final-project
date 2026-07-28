@@ -25,7 +25,8 @@ const Login = () => {
 
   const handleLogin = async (data) => {
     const res = await axios.post('http://localhost:9000/login', data);
-    if (res?.data?.success == true) {
+    if (res?.data?.success == true) 
+      {
       const userType = res?.data?.result?.type || data?.type;
       const userResult = { ...res?.data?.result, type: userType };
       localStorage.setItem("info", JSON.stringify(userResult));
@@ -64,7 +65,7 @@ const Login = () => {
             <label className="form-label fw-semibold">Login As</label>
             <select {...register("type")} className="form-select">
               <option value="client">Client</option>
-              <option value="user">Freelancer</option>
+              <option value="user">Freelancer / user</option>
               <option value="admin">Admin</option>
             </select>
             {errors.type && <p className="text-danger">{errors.type.message}</p>}
