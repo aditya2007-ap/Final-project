@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { FaCheck, FaTimes } from 'react-icons/fa'
+import Swal from 'sweetalert2'
 
 const UserPlans = () => {
   const [data, setData] = useState([])
@@ -13,7 +14,40 @@ const UserPlans = () => {
     const res = await axios.get('http://localhost:9000/admin-get-plans')
     setData(res?.data?.result)
   }
+  const handlePurchasePlan = (item) => {
+    const info = JSON.parse(localStorage.getItem("info"))
+    const userId = info?._id
+    const planId = item?._id;
 
+    Swal.fire({
+      title: "Are you sure want to purchase this plan?",
+      text: "You can able for more bidding",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Purchase it!"
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const data = { planId, userId }
+        const res = await axios.post('http://localhost:9000/user-purchase-plan', data)
+        if (res?.data?.success == true) {
+          Swal.fire({
+            title:"Purchase Plan",
+            text:res?.data?.message,
+            icon:'success'
+          })
+        }else{
+          Swal.fire({
+            title:"Purchase Plan",
+            text:res?.data?.message,
+            icon:'error'
+          })          
+        }
+      }
+    });
+
+  }
   return (
     <div className="container py-5">
       <div className="text-center mb-5">
@@ -69,11 +103,11 @@ const UserPlans = () => {
                 </li>
               </ul>
 
-              <button
+              <button onClick={() => handlePurchasePlan(item)}
                 type="button"
                 className={`btn w-100 mt-auto fw-bold rounded-pill py-2 ${item?.popular ? 'btn-primary' : 'btn-outline-primary'}`}
               >
-                Get Plans
+                Purchase
               </button>
             </div>
           </div>

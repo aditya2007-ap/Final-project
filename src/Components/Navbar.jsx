@@ -31,13 +31,13 @@ const CommonMenu = ({ data }) => {
   const dashboardPath = data?.type ? `/${data.type}-dashboard` : null;
 
   return (<>
-    <div className='row'>
+    <div className='row navbar-sticky-outer'>
       <div className="col-sm-2"></div>
       <div className="col-sm-8 menu">
         <nav className="navbar navbar-expand-lg navbar-light ">
           <div className="container-fluid">
             <Link className="navbar-brand" to="/">
-              <span className='text-color1 fs-2 fw-bold'>Zentora</span>
+              <img src="/logo-dark.svg" alt="Zentora" className="navbar-logo" />
             </Link>
             <button
               className="navbar-toggler"
@@ -126,13 +126,13 @@ const AdminMenu = () => {
   }
   return (<>
 
-    <div className='row'>
+    <div className='row navbar-sticky-outer'>
       <div className="col-sm-2"></div>
       <div className="col-sm-8 menu">
         <nav className="navbar navbar-expand-lg navbar-light ">
           <div className="container-fluid">
             <Link className="navbar-brand" to="/">
-              <span className='text-color1 fs-2 fw-bold'>Zentora</span>
+              <img src="/logo-dark.svg" alt="Zentora" className="navbar-logo" />
             </Link>
             <button
               className="navbar-toggler"
@@ -208,13 +208,13 @@ const ClientMenu = () => {
 
   }
   return (<>
-    <div className='row'>
+    <div className='row navbar-sticky-outer'>
       <div className="col-sm-2"></div>
       <div className="col-sm-8 menu">
         <nav className="navbar navbar-expand-lg navbar-light ">
           <div className="container-fluid">
             <Link className="navbar-brand" to="/">
-              <span className='text-color1 fs-2 fw-bold'>Zentora</span>
+              <img src="/logo-dark.svg" alt="Zentora" className="navbar-logo" />
             </Link>
 
             <button
@@ -282,13 +282,13 @@ const UserMenu = () => {
 
   }
   return (<>
-    <div className='row'>
+    <div className='row navbar-sticky-outer'>
       <div className="col-sm-2"></div>
       <div className="col-sm-8 menu">
         <nav className="navbar navbar-expand-lg navbar-light ">
           <div className="container-fluid">
             <Link className="navbar-brand" to="/">
-              <span className='text-color1 fs-2 fw-bold'>Zentora</span>
+              <img src="/logo-dark.svg" alt="Zentora" className="navbar-logo" />
             </Link>
 
             <button
@@ -310,6 +310,11 @@ const UserMenu = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
+                  <Link className="nav-link" to="/user-plans">
+                    User-Plans
+                  </Link>
+                </li>
+                <li className="nav-item">
                   <Link className="nav-link" to="/user-project">
                     User Project
                   </Link>
@@ -324,11 +329,7 @@ const UserMenu = () => {
                     User Profile
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/user-plans">
-                    User-Plans
-                  </Link>
-                </li>
+                
                 <li className="nav-item">
                   <button className="nav-link " onClick={logout} >
                     Logout

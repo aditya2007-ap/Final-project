@@ -1,11 +1,7 @@
 import React from 'react'
 import { FaGavel, FaClock, FaCheckCircle } from 'react-icons/fa'
 
-const myBidsList = [
-  { id: 'BID-901', project: 'React Native Mobile App', amount: '₹45,000', estTime: '14 Days', date: 'Just now', status: 'Pending Review' },
-  { id: 'BID-872', project: 'Full Stack Node.js API Service', amount: '₹30,000', estTime: '10 Days', date: '2 days ago', status: 'Accepted' },
-  { id: 'BID-744', project: 'Figma UI/UX Redesign', amount: '₹25,000', estTime: '7 Days', date: '5 days ago', status: 'Rejected' },
-]
+
 
 const UserBids = () => {
   return (
@@ -24,10 +20,10 @@ const UserBids = () => {
           <table className="table dash-table align-middle mb-0">
             <thead className="table-light">
               <tr>
-                <th>Bid Reference</th>
+               
                 <th>Project Name</th>
                 <th>Bid Amount</th>
-                <th>Delivery Time</th>
+               
                 <th>Submitted Date</th>
                 <th>Status</th>
               </tr>

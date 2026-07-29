@@ -32,8 +32,12 @@ const AdminPlans = () => {
     fetchData()
   }, [])
   const fetchData = async () => {
-    const res = await axios.get('http://localhost:9000/admin-get-plans');
-    setData(res?.data?.result)
+    try {
+      const res = await axios.get('http://localhost:9000/admin-get-plans');
+      setData(res?.data?.result || []);
+    } catch (error) {
+      console.error('Error fetching plans:', error);
+    }
   }
   const {
     register,
@@ -42,25 +46,58 @@ const AdminPlans = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-
   });
 
-  const onSubmit = async (data) => {
-    const res = await axios.post('http://localhost:9000/admin-create-plans', data);
-    if (res?.data?.success == true) {
+  const onSubmit = async (formData) => {
+    try {
+      const res = await axios.post('http://localhost:9000/admin-create-plans', formData);
+      if (res?.data?.success === true) {
+        Swal.fire({
+          title: "Success",
+          text: res?.data?.message || "Plan added successfully",
+          icon: "success"
+        })
+        reset()
+        fetchData()
+      } else {
+        Swal.fire({
+          title: "Notice",
+          text: res?.data?.message || "Unable to add plan",
+          icon: "warning"
+        })
+      }
+    } catch (error) {
       Swal.fire({
-        title: "Plan",
-        text: res?.data?.message,
-        icon: "success"
-      })
-      reset()
-      fetchData()
-    } else {
-      Swal.fire({
-        title: "Plan",
-        text: res?.data?.message,
+        title: "Error",
+        text: "Something went wrong creating the plan",
         icon: "error"
       })
+    }
+  };
+
+  const handleDelete = async (id) => {
+    const confirm = await Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to delete this credit plan?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!'
+    });
+
+    if (confirm.isConfirmed) {
+      try {
+        const res = await axios.delete(`http://localhost:9000/admin-delete-plan/${id}`);
+        if (res?.data?.success === true) {
+          Swal.fire('Deleted!', res?.data?.message || 'Plan has been deleted.', 'success');
+          fetchData();
+        } else {
+          Swal.fire('Error', res?.data?.message || 'Could not delete plan', 'error');
+        }
+      } catch (error) {
+        Swal.fire('Error', 'Failed to connect to server', 'error');
+      }
     }
   };
 
@@ -158,7 +195,7 @@ const AdminPlans = () => {
             <div className="existing-plans-header mb-3">
               <h5 className="fw-bold m-0 d-flex align-items-center">
                 <FiLayers className="text-color1 me-2" />
-                Active Credit Plans
+                Active Credit Plans ({data?.length || 0})
               </h5>
             </div>
 
@@ -171,26 +208,42 @@ const AdminPlans = () => {
                     <th scope="col">Price</th>
                     <th scope="col">Tagline</th>
                     <th scope="col">Badge</th>
+                    <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {data?.map((item)=>{
-                    return(
-                      <tr>
-                        <td>{item?.name}</td>
-                        <td>{item?.credits}</td>
-                        <td>₹{item?.price}</td>
+                  {data && data.length > 0 ? (
+                    data.map((item) => (
+                      <tr key={item?._id}>
+                        <td className="fw-bold text-dark">{item?.name}</td>
+                        <td><span className="badge bg-info text-dark">{item?.credits} Credits</span></td>
+                        <td className="fw-bold text-success">₹{item?.price}</td>
                         <td>{item?.tagline}</td>
                         <td>
-                          <button type='button' className='action-btn action-btn-delete'>
-                            <FiTrash2/>Delete
+                          {item?.popular ? (
+                            <span className="badge bg-warning text-dark"><FiStar className="me-1" />Most Popular</span>
+                          ) : (
+                            <span className="badge bg-secondary">Standard</span>
+                          )}
+                        </td>
+                        <td>
+                          <button 
+                            type='button' 
+                            onClick={() => handleDelete(item?._id)}
+                            className='btn btn-outline-danger btn-sm d-inline-flex align-items-center gap-1'
+                          >
+                            <FiTrash2 /> Delete
                           </button>
                         </td>
                       </tr>
-                    )
-                  })}
-                  
-                  
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="6" className="text-center py-4 text-muted">
+                        No credit plans found. Add your first plan above.
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>

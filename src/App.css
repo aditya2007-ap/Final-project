@@ -15,9 +15,362 @@
 .bg-color2 {
   color: #6a1b9a;
 }
-.menu ul li :hover {
-  color: #e65100;
+
+/* ==========================================
+   GLASSMORPHISM NAVBAR
+   ========================================== */
+/* ── Sticky Wrapper ── */
+.navbar-sticky-outer {
+  position: sticky;
+  top: 0;
+  z-index: 1040;
+  background: transparent;
 }
+
+/* ── Navbar Outer Container (Frosted Glass) ── */
+.menu {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 18px;
+  padding: 5px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.10),
+    0 1px 0 rgba(255, 255, 255, 0.6) inset;
+  margin-top: 14px;
+  margin-bottom: 18px;
+  transition: all 0.35s ease;
+  position: relative;
+}
+
+/* shimmer border glow on hover */
+.menu:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(230, 81, 0, 0.35);
+  box-shadow:
+    0 12px 40px rgba(230, 81, 0, 0.12),
+    0 1px 0 rgba(255, 255, 255, 0.7) inset;
+}
+
+.menu .navbar {
+  padding: 4px 0 !important;
+}
+
+/* ── Brand / Logo ── */
+.menu .navbar-brand {
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 12px;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease;
+}
+
+.menu .navbar-brand:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Logo image */
+.navbar-logo {
+  height: 38px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.menu .navbar-brand:hover .navbar-logo {
+  filter: drop-shadow(0 3px 10px rgba(230, 81, 0, 0.4));
+  transform: scale(1.04);
+}
+
+.menu .navbar-brand .text-color1 {
+  font-size: 1.8rem !important;
+  font-weight: 900 !important;
+  letter-spacing: -1px;
+  background: linear-gradient(135deg, #ff5722 0%, #ff8a65 50%, #e65100 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(230, 81, 0, 0.3));
+  transition: filter 0.3s ease;
+}
+
+.menu .navbar-brand:hover .text-color1 {
+  filter: drop-shadow(0 4px 14px rgba(230, 81, 0, 0.55));
+}
+
+/* ── Nav Items Layout ── */
+.menu .navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+/* ── Base Nav Link ── */
+.menu .nav-link {
+  position: relative;
+  font-family: 'Inter', sans-serif;
+  color: #374151 !important;
+  font-weight: 550;
+  font-size: 0.925rem;
+  letter-spacing: 0.15px;
+  padding: 8px 16px !important;
+  border-radius: 10px;
+  border: 1px solid transparent; /* always present — prevents layout shift on hover */
+  background: transparent;
+  transition: color 0.22s ease, background 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* glass shimmer effect on hover */
+.menu .nav-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.22s ease;
+  pointer-events: none;
+}
+
+/* ── Hover ── */
+.menu .nav-link:hover {
+  color: #e65100 !important;
+  background: rgba(255, 255, 255, 0.28);
+  border-color: rgba(255, 255, 255, 0.45);
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.06),
+    0 1px 0 rgba(255, 255, 255, 0.8) inset;
+  /* no transform — prevents jitter/vibration */
+}
+
+.menu .nav-link:hover::before {
+  opacity: 1;
+}
+
+/* ── Active Link ── */
+.menu .nav-link.active {
+  color: #e65100 !important;
+  font-weight: 700;
+  background: rgba(230, 81, 0, 0.12);
+  border-color: rgba(230, 81, 0, 0.25);
+  box-shadow:
+    0 4px 16px rgba(230, 81, 0, 0.15),
+    0 1px 0 rgba(255, 255, 255, 0.6) inset;
+}
+
+.menu .nav-link.active::before {
+  opacity: 0;
+}
+
+/* ── Dashboard / Primary ── */
+.menu .nav-link.text-primary {
+  color: #2563eb !important;
+  font-weight: 600;
+}
+.menu .nav-link.text-primary:hover {
+  color: #1d4ed8 !important;
+  background: rgba(37, 99, 235, 0.1);
+  border-color: rgba(37, 99, 235, 0.25);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.12), 0 1px 0 rgba(255,255,255,0.7) inset;
+}
+
+/* ── Logout / Danger ── */
+.menu .nav-link.text-danger,
+.menu button.nav-link {
+  color: #dc2626 !important;
+  font-weight: 600;
+  /* Reset browser default button styles that cause overflow */
+  appearance: none;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+  line-height: normal;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+.menu .nav-link.text-danger:hover,
+.menu button.nav-link:hover {
+  color: #b91c1c !important;
+  background: rgba(220, 38, 38, 0.1);
+  border-color: rgba(220, 38, 38, 0.25);
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.12), 0 1px 0 rgba(255,255,255,0.7) inset;
+}
+
+/* ── Mobile Toggler ── */
+.menu .navbar-toggler {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
+  padding: 5px 10px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(6px);
+  outline: none !important;
+  box-shadow: none !important;
+  transition: all 0.2s ease;
+}
+
+.menu .navbar-toggler:hover {
+  background: rgba(255, 255, 255, 0.35);
+  border-color: rgba(230, 81, 0, 0.35);
+}
+
+/* ── Mobile Expanded Menu ── */
+@media (max-width: 991.98px) {
+  .menu {
+    border-radius: 14px;
+    padding: 6px 16px;
+  }
+  .menu .navbar-collapse {
+    padding: 12px 0 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    margin-top: 8px;
+  }
+  .menu .navbar-nav {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+  }
+  .menu .nav-link {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 11px 16px !important;
+  }
+}
+
+/* ==========================================
+   COUNTER SECTION
+   ========================================== */
+.counter-section {
+  position: relative;
+  background: #f4f6f8;
+  padding: 50px 0;
+  overflow: hidden;
+}
+
+/* Decorative shape images */
+.counter-shape {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+
+.counter-shape-tl {
+  top: -30px;
+  left: -30px;
+  width: 260px;
+  opacity: 0.85;
+}
+
+.counter-shape-br-dots {
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-30%);
+  width: 170px;
+  opacity: 0.75;
+}
+
+.counter-shape-br-yellow {
+  bottom: -40px;
+  right: -40px;
+  width: 180px;
+  opacity: 1;
+  z-index: 0;
+}
+
+/* White card container — narrowed & square */
+.counter-card-outer {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* 2x2 grid */
+.counter-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+/* Each stat cell */
+.counter-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 28px 20px;
+}
+
+/* Border dividers between cells */
+.counter-item-1 {
+  border-right: 1px solid #eaeaea;
+  border-bottom: 1px solid #eaeaea;
+}
+.counter-item-2 {
+  border-bottom: 1px solid #eaeaea;
+}
+.counter-item-3 {
+  border-right: 1px solid #eaeaea;
+}
+.counter-item-4 {
+  /* no extra border */
+}
+
+/* Stat number */
+.counter-number {
+  font-size: 3rem;
+  font-weight: 800;
+  font-family: 'Inter', system-ui, sans-serif;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* Label text */
+.counter-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: #6b7280;
+  text-transform: uppercase;
+  font-family: 'Inter', system-ui, sans-serif;
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .counter-number {
+    font-size: 2.1rem;
+  }
+  .counter-item {
+    padding: 32px 16px;
+  }
+  .counter-shape-tl {
+    width: 130px;
+  }
+  .counter-shape-br-yellow {
+    width: 90px;
+  }
+}
+
 .hero {
   min-height: 300px;
   background: #eaf0f2;
@@ -80,6 +433,69 @@ animation: upDown 4s ease-out infinite alternate;
   transform: translateY(50px);
   background: #ee4a03;
   transition: .5s;
+}
+
+/* Glassmorphism effect for navbar */
+.menu.glass {
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border-radius: 18px !important;
+  padding: 5px 24px !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.10),
+    0 1px 0 rgba(255, 255, 255, 0.6) inset !important;
+  transition: all 0.35s ease !important;
+  margin-top: 14px !important;
+  margin-bottom: 18px !important;
+}
+
+.menu.glass:hover {
+  background: rgba(255, 255, 255, 0.22) !important;
+  border-color: rgba(230, 81, 0, 0.35) !important;
+  box-shadow:
+    0 12px 40px rgba(230, 81, 0, 0.12),
+    0 1px 0 rgba(255, 255, 255, 0.7) inset !important;
+}
+
+/* Glass effect for navbar links */
+.menu.glass .nav-link {
+  color: #374151 !important;
+  font-weight: 550;
+  font-size: 0.925rem;
+  letter-spacing: 0.15px;
+  padding: 8px 16px !important;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  transition: all 0.22s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.menu.glass .nav-link:hover {
+  color: #e65100 !important;
+  background: rgba(255, 255, 255, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.06),
+    0 1px 0 rgba(255, 255, 255, 0.8) inset;
+  transform: translateY(-1px);
+}
+
+.menu.glass .nav-link.active {
+  color: #e65100 !important;
+  font-weight: 700;
+  background: rgba(230, 81, 0, 0.12);
+  border: 1px solid rgba(230, 81, 0, 0.25);
+  box-shadow:
+    0 4px 16px rgba(230, 81, 0, 0.15),
+    0 1px 0 rgba(255, 255, 255, 0.6) inset;
 }
 .herodot {
   top: 50px;
