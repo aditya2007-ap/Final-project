@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2';
 
 const UserProjects = () => {
   const [data, setData] = useState([])
@@ -16,11 +17,17 @@ const UserProjects = () => {
       console.error(err)
     }
   }
-  const handlePostBid = ()=>{
-const info = JSON.parse(localStorage.getItem('info'));
-const userId = info?._id;
-console.log(userId,projectId,amount);
-
+  const handlePostBid = () => {
+    const info = JSON.parse(localStorage.getItem('info'));
+    const userId = info?._id;
+    if(amount){
+      Swal.fire({
+        title:'Validation Error',
+        text:'Please Enter Amount',
+        icon:'error'
+      })
+      return 0;
+    }
   }
   return (
     <div className="container py-5">
@@ -64,17 +71,17 @@ console.log(userId,projectId,amount);
                           projectId == item?._id ?
                             <>
                               <div className="d-flex justify-content-end gap-2">
-                                <input onChange={(e)=>setAmount(e.target.value)} type="text" className='form-control w-50'  />
+                                <input onChange={(e) => setAmount(e.target.value)} type="text" className='form-control w-50' />
                                 <button onClick={handlePostBid} className='btn btn-sm btn-orange'>Submit</button>
                               </div>
                             </>
                             :
                             <button onClick={() => setProjectId(item?._id)} type="button" className="btn btn-sm btn-primary fw-semibold px-3 rounded-pill">
-                        Place Bid
-                      </button>
+                              Place Bid
+                            </button>
                         }
                       </div>
-                      
+
                     </td>
                   </tr>
                 ))
