@@ -36,6 +36,8 @@ const UserProjects = () => {
         text: res?.data?.message,
         icon: 'success'
       })
+      setProjectId(null);
+      setAmount(null)
     } else {
       Swal.fire({
         title: 'Biding',

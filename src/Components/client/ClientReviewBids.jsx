@@ -1,6 +1,8 @@
 import { FaGavel, FaStar, FaBriefcase, FaClock, FaRupeeSign, FaMapMarkerAlt, FaTrophy, FaCheckCircle, FaTimesCircle, FaHeart, FaFileAlt } from 'react-icons/fa'
+import { useLocation } from 'react-router-dom'
 
 const ClientReviewBids = () => {
+  const location = useLocation()
   return (
     <div className="crb-page">
       <div className="container py-5">
@@ -15,44 +17,44 @@ const ClientReviewBids = () => {
         </div>
 
         {/* ========== STATS ROW ========== */}
-        {/* <div className="row g-3 mb-5"> */}
+        <div className="row g-3 mb-5">
 
         {/* Total Bids */}
-        {/* <div className="col-6 col-md-3">
+        <div className="col-6 col-md-3">
           <div className="crb-stat-card crb-stat-card-teal">
             <div className="crb-stat-icon"><FaGavel /></div>
             <div className="crb-stat-num">12</div>
             <div className="crb-stat-label">Total Bids</div>
           </div>
-        </div> */}
+        </div>
 
         {/* Avg Rating */}
-        {/* <div className="col-6 col-md-3">
+        <div className="col-6 col-md-3">
           <div className="crb-stat-card crb-stat-card-amber">
             <div className="crb-stat-icon"><FaStar /></div>
             <div className="crb-stat-num">4.8</div>
             <div className="crb-stat-label">Avg Rating</div>
           </div>
-        </div> */}
+        </div>
 
         {/* Freelancers */}
-        {/* <div className="col-6 col-md-3">
+        <div className="col-6 col-md-3">
           <div className="crb-stat-card crb-stat-card-blue">
             <div className="crb-stat-icon"><FaBriefcase /></div>
             <div className="crb-stat-num">47</div>
             <div className="crb-stat-label">Freelancers</div>
           </div>
-        </div> */}
+        </div>
 
         {/* Avg Response */}
-        {/* <div className="col-6 col-md-3">
+        <div className="col-6 col-md-3">
           <div className="crb-stat-card crb-stat-card-purple">
             <div className="crb-stat-icon"><FaClock /></div>
             <div className="crb-stat-num">3d</div>
             <div className="crb-stat-label">Avg Response</div>
           </div>
         </div>
-      </div> */}
+      </div>
 
         {/* ========== SINGLE BID CARD ========== */}
         <div className="row g-4 justify-content-center">

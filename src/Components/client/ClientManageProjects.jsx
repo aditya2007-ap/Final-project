@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FaTrash, FaEye } from 'react-icons/fa'
 import axios from 'axios'
+import { MdManageAccounts } from "react-icons/md";
 
 const ClientManageProjects = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState([])
   useEffect(() => {
     fetchData()
@@ -44,7 +46,7 @@ const ClientManageProjects = () => {
                         <th>Budget</th>
                         <th>Timeline</th>
                         <th>Bids</th>
-                        <th>Status</th>
+                        <th>Manage</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
@@ -57,7 +59,11 @@ const ClientManageProjects = () => {
                             <td>{item?.budget}</td>
                             <td>{item?.timeline || item?.duration}</td>
                             <td>{item?.bidsCount || 0}</td>
-                            <td><span className="status-ok">{item?.status ? "Done" : "In Progress"}</span></td>
+                            <td>
+                              <button onClick={()=>{
+                              navigate('/client-Review-bids',{state:item})
+                            }}
+                             type="button" className="action-btn action-btn-delete"><MdManageAccounts /> Details</button></td>
                             <td>
                               <button type="button" className="action-btn action-btn-delete"><FaTrash /> Delete</button>
                             </td>
