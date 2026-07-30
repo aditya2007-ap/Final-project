@@ -13,7 +13,6 @@ const Navbar = () => {
   }, [location.pathname]);
 
 
-
   const path = location.pathname;
 
   if (path.startsWith('/admin') && data?.type === 'admin') {
@@ -31,10 +30,9 @@ const CommonMenu = ({ data }) => {
   const dashboardPath = data?.type ? `/${data.type}-dashboard` : null;
 
   return (<>
-    <div className='row navbar-sticky-outer'>
-      <div className="col-sm-2"></div>
-      <div className="col-sm-8 menu">
-        <nav className="navbar navbar-expand-lg navbar-light ">
+    <div className='row navbar-sticky-outer justify-content-center mx-0'>
+      <div className="col-12 col-xl-10 menu">
+        <nav className="navbar navbar-expand-lg navbar-light">
           <div className="container-fluid">
             <Link className="navbar-brand" to="/">
               <img src="/logo-dark.svg" alt="Zentora" className="navbar-logo" />
@@ -51,7 +49,7 @@ const CommonMenu = ({ data }) => {
               <span className="navbar-toggler-icon" />
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav">
+              <ul className="navbar-nav ms-auto align-items-center">
                 <li className="nav-item">
                   <Link className="nav-link active" aria-current="page" to="/">
                     Home
@@ -104,32 +102,27 @@ const CommonMenu = ({ data }) => {
                     </li>
                   </>
                 )}
-
               </ul>
             </div>
           </div>
         </nav>
 
       </div>
-      <div className="col-sm-2"></div>
     </div>
 
   </>)
 }
 
 const AdminMenu = () => {
-    const navigate = useNavigate();
-      const logout = () => {
+  const navigate = useNavigate();
+  const logout = () => {
     localStorage.removeItem('info');
     navigate('/');
-
   }
   return (<>
-
-    <div className='row navbar-sticky-outer'>
-      <div className="col-sm-2"></div>
-      <div className="col-sm-8 menu">
-        <nav className="navbar navbar-expand-lg navbar-light ">
+    <div className='row navbar-sticky-outer justify-content-center mx-0'>
+      <div className="col-12 col-xl-10 menu">
+        <nav className="navbar navbar-expand-lg navbar-light">
           <div className="container-fluid">
             <Link className="navbar-brand" to="/">
               <img src="/logo-dark.svg" alt="Zentora" className="navbar-logo" />
@@ -146,10 +139,15 @@ const AdminMenu = () => {
               <span className="navbar-toggler-icon" />
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav">
+              <ul className="navbar-nav ms-auto align-items-center">
                 <li className="nav-item">
                   <Link className="nav-link active" aria-current="page" to="/admin-dashboard">
-                    Admin Dashboard
+                    Dashboard
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/admin-plans">
+                    Plans
                   </Link>
                 </li>
                 <li className="nav-item">
@@ -169,12 +167,7 @@ const AdminMenu = () => {
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/admin-bids">
-                    Admin Bids
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/admin-plans">
-                    Admin Plans
+                    Bids
                   </Link>
                 </li>
                 <li className="nav-item">
@@ -183,35 +176,31 @@ const AdminMenu = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <button className="nav-link " onClick={logout} >
+                  <button className="nav-link text-danger border-0 bg-transparent" onClick={logout}>
                     Logout
                   </button>
                 </li>
-
               </ul>
             </div>
           </div>
         </nav>
 
       </div>
-      <div className="col-sm-2"></div>
     </div>
 
   </>)
 }
 
 const ClientMenu = () => {
-   const navigate = useNavigate();
-      const logout = () => {
+  const navigate = useNavigate();
+  const logout = () => {
     localStorage.removeItem('info');
     navigate('/');
-
   }
   return (<>
-    <div className='row navbar-sticky-outer'>
-      <div className="col-sm-2"></div>
-      <div className="col-sm-8 menu">
-        <nav className="navbar navbar-expand-lg navbar-light ">
+    <div className='row navbar-sticky-outer justify-content-center mx-0'>
+      <div className="col-12 col-xl-10 menu">
+        <nav className="navbar navbar-expand-lg navbar-light">
           <div className="container-fluid">
             <Link className="navbar-brand" to="/">
               <img src="/logo-dark.svg" alt="Zentora" className="navbar-logo" />
@@ -229,10 +218,10 @@ const ClientMenu = () => {
               <span className="navbar-toggler-icon" />
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav">
+              <ul className="navbar-nav ms-auto align-items-center">
                 <li className="nav-item">
                   <Link className="nav-link active" aria-current="page" to="/client-dashboard">
-                    Client Dashboard
+                    Dashboard
                   </Link>
                 </li>
                 <li className="nav-item">
@@ -245,47 +234,37 @@ const ClientMenu = () => {
                     Manage Project
                   </Link>
                 </li>
-
-                <li className="nav-item">
-                  <Link className="nav-link" to="/client-Review-bids">
-                    Review Bids
-                  </Link>
-                </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/client-profile">
                     Profile
                   </Link>
                 </li>
                 <li className="nav-item">
-                 <button className="nav-link " onClick={logout} >
+                  <button className="nav-link text-danger border-0 bg-transparent" onClick={logout}>
                     Logout
                   </button>
                 </li>
-
               </ul>
             </div>
           </div>
         </nav>
 
       </div>
-      <div className="col-sm-2"></div>
     </div>
 
   </>)
 }
 
 const UserMenu = () => {
-   const navigate = useNavigate();
-      const logout = () => {
+  const navigate = useNavigate();
+  const logout = () => {
     localStorage.removeItem('info');
     navigate('/');
-
   }
   return (<>
-    <div className='row navbar-sticky-outer'>
-      <div className="col-sm-2"></div>
-      <div className="col-sm-8 menu">
-        <nav className="navbar navbar-expand-lg navbar-light ">
+    <div className='row navbar-sticky-outer justify-content-center mx-0'>
+      <div className="col-12 col-xl-10 menu">
+        <nav className="navbar navbar-expand-lg navbar-light">
           <div className="container-fluid">
             <Link className="navbar-brand" to="/">
               <img src="/logo-dark.svg" alt="Zentora" className="navbar-logo" />
@@ -303,47 +282,43 @@ const UserMenu = () => {
               <span className="navbar-toggler-icon" />
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav">
+              <ul className="navbar-nav ms-auto align-items-center">
                 <li className="nav-item">
                   <Link className="nav-link active" aria-current="page" to="/user-dashboard">
-                    User Dashboard
+                    Dashboard
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/user-plans">
-                    User-Plans
+                    Plans
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/user-project">
-                    User Project
+                    Projects
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/user-bids">
-                    Bids
+                    My Bids
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/user-profile">
-                    User Profile
+                    Profile
                   </Link>
                 </li>
-                
                 <li className="nav-item">
-                  <button className="nav-link " onClick={logout} >
+                  <button className="nav-link text-danger border-0 bg-transparent" onClick={logout}>
                     Logout
                   </button>
                 </li>
-
-
               </ul>
             </div>
           </div>
         </nav>
 
       </div>
-      <div className="col-sm-2"></div>
     </div>
 
   </>)

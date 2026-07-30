@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -17,6 +17,7 @@ const schema = yup
   })
 
 const Register = () => {
+  const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
@@ -27,7 +28,9 @@ const Register = () => {
         title: "Register",
         text: res?.data?.message,
         icon: "success"
-      })
+      }).then(() => {
+        navigate('/login');
+      });
     } else {
       Swal.fire({
         title: "Register",

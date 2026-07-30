@@ -16,9 +16,9 @@ const ClientReviewBids = () => {
     setData(res?.data?.result)
   }
 
-  const handleStatus = async (status) => {
+  const handleStatus = async (status, userId) => {
     const projectId = location?.state?._id;
-    const data = { projectId, status }
+    const data = { projectId, status ,userId}
     const res = await axios.put('http://localhost:9000/client-biding-action', data);
     if (res?.data?.success == true) {
       Swal.fire({
@@ -111,8 +111,8 @@ const ClientReviewBids = () => {
                           <span className={item?.status == 'accept' ? 'status-ok' : 'status-bad'}>{item?.status}</span>
                         </td>
                         <td>
-                          <span className="status-ok me-2" onClick={() => handleStatus('accept')}>Accept</span>
-                          <span className="status-bad" onClick={() => handleStatus('reject')}>Reject</span>
+                          <span className="status-ok me-2" onClick={() => handleStatus('accept', item?.userId)}>Accept</span>
+                          <span className="status-bad" onClick={() => handleStatus('reject', item?.userId)}>Reject</span>
                         </td>
                       </tr>)
                     })

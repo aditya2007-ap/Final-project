@@ -66,7 +66,6 @@ const AdminDashboard = () => {
                   <div className='px-4'>
                     <div className="stat-number">{data?.projects}</div>
                     <div className="stat-title">Live Projects</div>
-                    <div className="stat-subtitle">0 deals finalized</div>
                   </div>
                 </div>
               </div>

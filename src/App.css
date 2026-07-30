@@ -106,6 +106,7 @@
   align-items: center;
   gap: 4px;
   margin-left: auto;
+  flex-wrap: nowrap;
 }
 
 /* ── Base Nav Link ── */
@@ -114,9 +115,9 @@
   font-family: 'Inter', sans-serif;
   color: #374151 !important;
   font-weight: 550;
-  font-size: 0.925rem;
+  font-size: 0.9rem;
   letter-spacing: 0.15px;
-  padding: 8px 16px !important;
+  padding: 7px 14px !important;
   border-radius: 10px;
   border: 1px solid transparent; /* always present — prevents layout shift on hover */
   background: transparent;
@@ -128,6 +129,7 @@
   justify-content: center;
   white-space: nowrap;
   overflow: hidden;
+  line-height: 1.4;
 }
 
 /* glass shimmer effect on hover */
@@ -154,7 +156,6 @@
   box-shadow:
     0 4px 14px rgba(0, 0, 0, 0.06),
     0 1px 0 rgba(255, 255, 255, 0.8) inset;
-  /* no transform — prevents jitter/vibration */
 }
 
 .menu .nav-link:hover::before {
@@ -185,7 +186,6 @@
   color: #1d4ed8 !important;
   background: rgba(37, 99, 235, 0.1);
   border-color: rgba(37, 99, 235, 0.25);
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.12), 0 1px 0 rgba(255,255,255,0.7) inset;
 }
 
 /* ── Logout / Danger ── */
@@ -193,14 +193,17 @@
 .menu button.nav-link {
   color: #dc2626 !important;
   font-weight: 600;
-  /* Reset browser default button styles that cause overflow */
   appearance: none;
   -webkit-appearance: none;
   box-sizing: border-box;
-  line-height: normal;
+  margin: 0;
+  border: 1px solid transparent;
+  background: transparent;
+  line-height: 1.4;
   vertical-align: middle;
   flex-shrink: 0;
 }
+
 .menu .nav-link.text-danger:hover,
 .menu button.nav-link:hover {
   color: #b91c1c !important;
@@ -208,6 +211,7 @@
   border-color: rgba(220, 38, 38, 0.25);
   box-shadow: 0 4px 14px rgba(220, 38, 38, 0.12), 0 1px 0 rgba(255,255,255,0.7) inset;
 }
+
 
 /* ── Mobile Toggler ── */
 .menu .navbar-toggler {
@@ -3292,6 +3296,299 @@ h1 {
     font-size: 1.4rem;
   }
 }
+
+/* ═══════════════════════════════════════════════════════
+   ✦ USER PROJECTS PAGE — Premium Glassmorphic Styling
+   ═══════════════════════════════════════════════════════ */
+
+/* Glass Card container for live projects table */
+.container .card.shadow-sm.border-0.rounded-3 {
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-radius: 20px !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(255, 255, 255, 0.8) inset !important;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Header pill badge */
+.container .badge.bg-primary {
+  background: linear-gradient(135deg, #e65100 0%, #ff8a50 100%) !important;
+  color: #ffffff !important;
+  padding: 8px 18px !important;
+  border-radius: 50px !important;
+  font-size: 0.78rem !important;
+  letter-spacing: 0.5px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 14px rgba(230, 81, 0, 0.25) !important;
+}
+
+/* Table header styling */
+.container .table .table-light,
+.container .table th {
+  background: rgba(248, 250, 252, 0.95) !important;
+  color: #1e293b !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.6px !important;
+  padding: 16px 20px !important;
+  border-bottom: 2px solid rgba(226, 232, 240, 0.8) !important;
+}
+
+/* Table rows styling & micro-animations */
+.container .table td {
+  padding: 18px 20px !important;
+  vertical-align: middle !important;
+  border-bottom: 1px solid rgba(241, 245, 249, 0.8) !important;
+  transition: background 0.25s ease !important;
+}
+
+.container .table-hover tbody tr:hover td {
+  background: rgba(248, 250, 252, 0.8) !important;
+}
+
+/* Primary "Place Bid" button */
+.container .btn-primary,
+.container .btn-sm.btn-primary {
+  background: linear-gradient(135deg, #e65100 0%, #ff6d00 100%) !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  padding: 8px 20px !important;
+  border-radius: 50px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 4px 14px rgba(230, 81, 0, 0.25) !important;
+}
+
+.container .btn-primary:hover,
+.container .btn-sm.btn-primary:hover {
+  background: linear-gradient(135deg, #d44800 0%, #e65100 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(230, 81, 0, 0.35) !important;
+}
+
+/* Green "Submit" bid amount button */
+.btn-orange,
+.btn-sm.btn-orange {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-weight: 700 !important;
+  border-radius: 10px !important;
+  padding: 8px 18px !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25) !important;
+}
+
+.btn-orange:hover,
+.btn-sm.btn-orange:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35) !important;
+}
+
+/* Amount Input field styling */
+.container input.form-control.w-50 {
+  border-radius: 10px !important;
+  border: 1.5px solid #cbd5e1 !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  transition: all 0.25s ease !important;
+}
+
+.container input.form-control.w-50:focus {
+  border-color: #e65100 !important;
+  box-shadow: 0 0 0 3px rgba(230, 81, 0, 0.15) !important;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ✦ GLASSMORPHIC PROJECT CARDS GRID WITH SHINING SWEEP
+   ═══════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════
+   ✦ GLASSMORPHIC PROJECT CARDS GRID WITH CONTINUOUS SHINING SWEEP
+   ═══════════════════════════════════════════════════════ */
+
+.project-glass-card {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  border: 1.5px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.05), 
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 0 20px rgba(230, 81, 0, 0.04) !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Continuous Light Beam Sweep across the card surface */
+.project-glass-card::before {
+  content: '';
+  position: absolute;
+  top: -60%;
+  left: -60%;
+  width: 40%;
+  height: 220%;
+  background: linear-gradient(
+    90deg, 
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 25%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 138, 80, 0.4) 75%,
+    transparent 100%
+  );
+  transform: rotate(25deg);
+  animation: glassShine 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Top Edge Shining Accent Line */
+.project-glass-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg, 
+    transparent 0%, 
+    #ff8a50 25%, 
+    #e65100 50%, 
+    #ff8a50 75%, 
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.project-glass-card:hover {
+  transform: translateY(-10px) scale(1.01) !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  box-shadow: 
+    0 22px 55px rgba(230, 81, 0, 0.18), 
+    0 1px 0 rgba(255, 255, 255, 1) inset,
+    0 0 35px rgba(230, 81, 0, 0.12) !important;
+  border-color: rgba(230, 81, 0, 0.35) !important;
+}
+
+.project-glass-card:hover::before {
+  animation: glassShine 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Project Card Typography & Badges */
+.project-title {
+  letter-spacing: -0.3px;
+  line-height: 1.35;
+}
+
+.project-desc {
+  line-height: 1.65;
+}
+
+.amount-input:focus {
+  border-color: #e65100 !important;
+  box-shadow: 0 0 0 3px rgba(230, 81, 0, 0.15) !important;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ✦ CLIENT MANAGE PROJECTS — Glassmorphic Card Styling
+   ═══════════════════════════════════════════════════════ */
+
+.client-project-glass-card {
+  background: rgba(255, 255, 255, 0.86) !important;
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  border: 1.5px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.05), 
+    0 1px 0 rgba(255, 255, 255, 0.9) inset !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Light Beam Sweep Overlay */
+.client-project-glass-card::before {
+  content: '';
+  position: absolute;
+  top: -60%;
+  left: -60%;
+  width: 40%;
+  height: 220%;
+  background: linear-gradient(
+    90deg, 
+    transparent 0%,
+    rgba(255, 255, 255, 0.25) 25%,
+    rgba(255, 255, 255, 0.85) 50%,
+    rgba(230, 81, 0, 0.3) 75%,
+    transparent 100%
+  );
+  transform: rotate(25deg);
+  animation: glassShine 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Top Edge Shimmer Accent */
+.client-project-glass-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg, 
+    transparent 0%, 
+    #ff8a50 25%, 
+    #e65100 50%, 
+    #ff8a50 75%, 
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.client-project-glass-card:hover {
+  transform: translateY(-8px) scale(1.01) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 
+    0 22px 55px rgba(230, 81, 0, 0.16), 
+    0 1px 0 rgba(255, 255, 255, 1) inset !important;
+  border-color: rgba(230, 81, 0, 0.3) !important;
+}
+
+.client-project-glass-card:hover::before {
+  animation: glassShine 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.bg-orange-subtle {
+  background-color: rgba(230, 81, 0, 0.08) !important;
+}
+
+.client-project-title {
+  font-size: 1.25rem;
+  letter-spacing: -0.3px;
+  line-height: 1.35;
+}
+
+.client-project-desc {
+  line-height: 1.65;
+}
+
+
+
+
 
 
 

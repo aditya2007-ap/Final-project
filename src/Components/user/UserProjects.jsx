@@ -1,14 +1,17 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2';
+import { FaBriefcase, FaClock, FaTag, FaCalendarAlt, FaPaperPlane, FaGavel } from 'react-icons/fa';
 
 const UserProjects = () => {
   const [data, setData] = useState([])
   const [projectId, setProjectId] = useState('');
   const [amount, setAmount] = useState(null);
+
   useEffect(() => {
     fetchData();
   }, [])
+
   const fetchData = async () => {
     try {
       const res = await axios.get('http://localhost:9000/admin-projects-list')
@@ -17,6 +20,7 @@ const UserProjects = () => {
       console.error(err)
     }
   }
+
   const handlePostBid = async () => {
     const info = JSON.parse(localStorage.getItem('info'));
     const userId = info?._id;
@@ -46,72 +50,93 @@ const UserProjects = () => {
       })
     }
   }
+
   return (
     <div className="container py-5">
       {/* Header Section */}
-      <div className="row align-items-center mb-4 g-3">
+      <div className="row align-items-center mb-5 g-3">
         <div className="col-md-8">
-          <span className="badge bg-primary mb-2">Zentora Freelance Jobs</span>
-          <h2 className="fw-bold mb-1">Browse Live Client Projects</h2>
-          <p className="text-muted m-0">Find exciting projects posted by top clients and place your proposals.</p>
+          <span className="badge bg-primary mb-2 px-3 py-2 rounded-pill fw-bold text-uppercase">
+            Zentora Freelance Jobs
+          </span>
+          <h2 className="display-6 fw-bold mb-2 text-dark">Browse Live Client Projects</h2>
+          <p className="text-secondary lead fs-6 m-0">
+            Find exciting projects posted by top clients and place your competitive proposals.
+          </p>
         </div>
       </div>
 
-      {/* Bootstrap Table */}
-      <div className="card shadow-sm border-0 rounded-3 p-3">
-        <div className="table-responsive">
-          <table className="table table-hover align-middle mb-0">
-            <thead className="table-light">
-              <tr>
-                <th>Project Title</th>
-                <th>Description</th>
-                <th>Budget</th>
-                <th>Timeline</th>
-                <th>Posted Date</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data && data.length > 0 ? (
-                data.map((item, index) => (
-                  <tr key={item._id || index}>
-                    <td className="fw-bold text-dark">{item.title}</td>
-                    <td className="text-secondary small">{item.description || item.desc || 'No description provided.'}</td>
-                    <td className="fw-bold text-success">₹{item.budget}</td>
-                    <td>{item.timeline || item.duration || item.time || 'Flexible'}</td>
-                    <td className="text-muted small">
-                      {item.createdAt ? new Date(item.createdAt).toLocaleDateString() : 'Recent'}
-                    </td>
-                    <td>
-                      <div className='col-6 text-end'>
-                        {
-                          projectId == item?._id ?
-                            <>
-                              <div className="d-flex justify-content-end gap-2">
-                                <input onChange={(e) => setAmount(e.target.value)} type="text" className='form-control w-50' placeholder='Enter Your Amount' />
-                                <button onClick={handlePostBid} className='btn btn-sm btn-orange'>Submit</button>
-                              </div>
-                            </>
-                            :
-                            <button onClick={() => setProjectId(item?._id)} type="button" className="btn btn-sm btn-primary fw-semibold px-3 rounded-pill">
-                              Place Bid
-                            </button>
-                        }
-                      </div>
+      {/* Glassmorphic Project Cards Grid */}
+      <div className="row g-4">
+        {data && data.length > 0 ? (
+          data.map((item, index) => (
+            <div className="col-lg-6 col-md-12" key={item._id || index}>
+              <div className="card h-100 border-0 p-4 rounded-4 shadow-sm project-glass-card">
+                <div className="d-flex justify-content-between align-items-start mb-3 gap-2">
+                  <div>
+                    <span className="badge bg-danger-subtle text-danger mb-2 px-3 py-1 rounded-pill fw-semibold small">
+                      <FaBriefcase className="me-1" /> Open Contract
+                    </span>
+                    <h4 className="fw-bold text-dark mb-1 project-title">{item.title}</h4>
+                  </div>
+                  <div className="text-end flex-shrink-0">
+                    <span className="fs-4 fw-bold text-success d-block">₹{item.budget}</span>
+                    <small className="text-muted fw-semibold">Budget</small>
+                  </div>
+                </div>
 
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="6" className="text-center py-4 text-muted">
-                    No active projects found from any client.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+                <p className="text-secondary small mb-4 project-desc flex-grow-1">
+                  {item.description || item.desc || 'No detailed description provided by the client.'}
+                </p>
+
+                <div className="d-flex flex-wrap align-items-center justify-content-between pt-3 border-top gap-3">
+                  <div className="d-flex align-items-center gap-3 text-muted small">
+                    <span className="d-flex align-items-center gap-1">
+                      <FaClock className="text-primary" /> {item.timeline || item.duration || item.time || 'Flexible'}
+                    </span>
+                    <span className="d-flex align-items-center gap-1">
+                      <FaCalendarAlt className="text-warning" /> 
+                      {item.createdAt ? new Date(item.createdAt).toLocaleDateString() : 'Recent'}
+                    </span>
+                  </div>
+
+                  <div className="bid-action-area">
+                    {projectId === item?._id ? (
+                      <div className="d-flex align-items-center gap-2">
+                        <input
+                          onChange={(e) => setAmount(e.target.value)}
+                          type="number"
+                          className="form-control form-control-sm rounded-3 amount-input"
+                          placeholder="Your Amount (₹)"
+                          style={{ width: '130px' }}
+                        />
+                        <button onClick={handlePostBid} className="btn btn-sm btn-orange d-inline-flex align-items-center gap-1">
+                          <FaPaperPlane /> Submit
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => setProjectId(item?._id)}
+                        type="button"
+                        className="btn btn-sm btn-primary fw-bold px-4 py-2 rounded-pill d-inline-flex align-items-center gap-2"
+                      >
+                        <FaGavel /> Place Bid
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="col-12 text-center py-5">
+            <div className="p-5 bg-white rounded-4 shadow-sm">
+              <FaBriefcase className="text-muted fs-1 mb-3" />
+              <h5 className="text-muted fw-bold">No active projects found</h5>
+              <p className="text-secondary small m-0">Check back later for newly posted client opportunities.</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

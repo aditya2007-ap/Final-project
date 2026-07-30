@@ -19,6 +19,7 @@
     "react-icons": "^5.7.0",
     "react-router-dom": "^7.18.1",
     "sweetalert2": "^11.26.25",
+    "typewriter-effect": "^2.22.0",
     "yup": "^1.7.1"
   },
   "devDependencies": {
