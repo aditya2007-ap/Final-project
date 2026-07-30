@@ -4,8 +4,8 @@ import Swal from 'sweetalert2';
 
 const UserProjects = () => {
   const [data, setData] = useState([])
-  const [projectId, setProjectId] = useState(' ');
-  const [amount, setAmount] = useState(' ');
+  const [projectId, setProjectId] = useState('');
+  const [amount, setAmount] = useState(null);
   useEffect(() => {
     fetchData();
   }, [])
@@ -17,16 +17,31 @@ const UserProjects = () => {
       console.error(err)
     }
   }
-  const handlePostBid = () => {
+  const handlePostBid = async () => {
     const info = JSON.parse(localStorage.getItem('info'));
     const userId = info?._id;
-    if(amount){
+    if (!amount) {
       Swal.fire({
-        title:'Validation Error',
-        text:'Please Enter Amount',
-        icon:'error'
+        title: 'Validation Error',
+        text: 'Please Enter Amount',
+        icon: 'error'
       })
       return 0;
+    }
+    const data = { userId, projectId, amount };
+    const res = await axios.post('http://localhost:9000/user-create-bids', data);
+    if (res?.data?.success == true) {
+      Swal.fire({
+        title: 'Biding',
+        text: res?.data?.message,
+        icon: 'success'
+      })
+    } else {
+      Swal.fire({
+        title: 'Biding',
+        text: res?.data?.message,
+        icon: 'error'
+      })
     }
   }
   return (
@@ -71,7 +86,7 @@ const UserProjects = () => {
                           projectId == item?._id ?
                             <>
                               <div className="d-flex justify-content-end gap-2">
-                                <input onChange={(e) => setAmount(e.target.value)} type="text" className='form-control w-50' />
+                                <input onChange={(e) => setAmount(e.target.value)} type="text" className='form-control w-50' placeholder='Enter Your Amount' />
                                 <button onClick={handlePostBid} className='btn btn-sm btn-orange'>Submit</button>
                               </div>
                             </>
