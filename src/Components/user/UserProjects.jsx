@@ -17,7 +17,10 @@ const UserProjects = () => {
     }
   }
   const handlePostBid = ()=>{
-    
+const info = JSON.parse(localStorage.getItem('info'));
+const userId = info?._id;
+console.log(userId,projectId,amount);
+
   }
   return (
     <div className="container py-5">
@@ -62,7 +65,7 @@ const UserProjects = () => {
                             <>
                               <div className="d-flex justify-content-end gap-2">
                                 <input onChange={(e)=>setAmount(e.target.value)} type="text" className='form-control w-50'  />
-                                <button className='btn btn-sm btn-orange'>Submit</button>
+                                <button onClick={handlePostBid} className='btn btn-sm btn-orange'>Submit</button>
                               </div>
                             </>
                             :
