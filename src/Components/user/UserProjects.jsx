@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 const UserProjects = () => {
   const [data, setData] = useState([])
   const [projectId, setProjectId] = useState(' ');
+  const [amount, setAmount] = useState(' ');
   useEffect(() => {
     fetchData();
   }, [])
@@ -15,7 +16,9 @@ const UserProjects = () => {
       console.error(err)
     }
   }
-
+  const handlePostBid = ()=>{
+    
+  }
   return (
     <div className="container py-5">
       {/* Header Section */}
@@ -58,7 +61,7 @@ const UserProjects = () => {
                           projectId == item?._id ?
                             <>
                               <div className="d-flex justify-content-end gap-2">
-                                <input type="text" className='form-control w-50'  />
+                                <input onChange={(e)=>setAmount(e.target.value)} type="text" className='form-control w-50'  />
                                 <button className='btn btn-sm btn-orange'>Submit</button>
                               </div>
                             </>
