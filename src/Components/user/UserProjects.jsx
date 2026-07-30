@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 const UserProjects = () => {
   const [data, setData] = useState([])
+  const [projectId, setProjectId] = useState(' ');
   useEffect(() => {
     fetchData();
   }, [])
@@ -52,9 +53,22 @@ const UserProjects = () => {
                       {item.createdAt ? new Date(item.createdAt).toLocaleDateString() : 'Recent'}
                     </td>
                     <td>
-                      <button type="button" className="btn btn-sm btn-primary fw-semibold px-3 rounded-pill">
+                      <div className='col-6 text-end'>
+                        {
+                          projectId == item?._id ?
+                            <>
+                              <div className="d-flex justify-content-end gap-2">
+                                <input type="text" className='form-control w-50'  />
+                                <button className='btn btn-sm btn-orange'>Submit</button>
+                              </div>
+                            </>
+                            :
+                            <button onClick={() => setProjectId(item?._id)} type="button" className="btn btn-sm btn-primary fw-semibold px-3 rounded-pill">
                         Place Bid
                       </button>
+                        }
+                      </div>
+                      
                     </td>
                   </tr>
                 ))

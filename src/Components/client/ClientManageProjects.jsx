@@ -59,7 +59,6 @@ const ClientManageProjects = () => {
                             <td>{item?.bidsCount || 0}</td>
                             <td><span className="status-ok">{item?.status ? "Done" : "In Progress"}</span></td>
                             <td>
-                              <button type="button" className="btn btn-sm btn-outline-secondary me-2" disabled>Hired</button>
                               <button type="button" className="action-btn action-btn-delete"><FaTrash /> Delete</button>
                             </td>
                           </tr>

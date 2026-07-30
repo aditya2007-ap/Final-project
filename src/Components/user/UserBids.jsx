@@ -1,9 +1,22 @@
-import React from 'react'
-import { FaGavel, FaClock, FaCheckCircle } from 'react-icons/fa'
-
-
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { FaGavel } from 'react-icons/fa'
 
 const UserBids = () => {
+  const [data, setData] = useState([]);  // ✅ top-level
+
+  const fetchData = async () => {        // ✅ defined before useEffect
+    const info = JSON.parse(localStorage.getItem('info'));
+    const userId = info?._id;
+    const res = await axios.get(`http://localhost:9000/user-get-bids?userId=${userId}`);
+    setData(res?.data?.result);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, [])
+
+
   return (
     <div className="container py-5">
       <div className="row mb-4">
@@ -20,35 +33,19 @@ const UserBids = () => {
           <table className="table dash-table align-middle mb-0">
             <thead className="table-light">
               <tr>
-               
                 <th>Project Name</th>
-                <th>Bid Amount</th>
-               
-                <th>Submitted Date</th>
+                <th>Client Budget</th>
+                <th>Bidding Budget</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
-              {myBidsList.map((bid) => (
-                <tr key={bid.id}>
-                  <td className="fw-bold text-secondary">{bid.id}</td>
-                  <td className="fw-semibold">{bid.project}</td>
-                  <td className="fw-bold text-success">{bid.amount}</td>
-                  <td>{bid.estTime}</td>
-                  <td className="small text-muted">{bid.date}</td>
-                  <td>
-                    <span
-                      className={`badge px-3 py-2 rounded-pill ${
-                        bid.status === 'Accepted'
-                          ? 'bg-success'
-                          : bid.status === 'Rejected'
-                          ? 'bg-danger'
-                          : 'bg-warning text-dark'
-                      }`}
-                    >
-                      {bid.status}
-                    </span>
-                  </td>
+              {data?.map((item) => (  // ✅ correct arrow function
+                <tr key={item?._id}>
+                  <td className="fw-bold text-secondary">{item?.title}</td>
+                  <td className="fw-semibold">{item?.budget}</td>
+                  <td className="fw-bold text-success">{item?.amount}</td>
+                  <td><span className={item?.status == 'accepted' ? 'status-ok' : 'status-pending'}>{item?.status}</span></td>
                 </tr>
               ))}
             </tbody>
