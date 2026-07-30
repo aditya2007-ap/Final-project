@@ -1,140 +1,132 @@
-import { FaGavel, FaStar, FaBriefcase, FaClock, FaRupeeSign, FaMapMarkerAlt, FaTrophy, FaCheckCircle, FaTimesCircle, FaHeart, FaFileAlt } from 'react-icons/fa'
-import { useLocation } from 'react-router-dom'
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const ClientReviewBids = () => {
-  const location = useLocation()
+  const location = useLocation();
+  const [data, setData] = useState([])
+  useEffect(() => {
+    fetchData() //call 
+  }, [location])
+
+  const fetchData = async () => {
+    const projectId = location?.state?._id
+    const res = await axios.get(`http://localhost:9000/client-biding-list?projectId=${projectId}`)
+    setData(res?.data?.result)
+  }
+
+  const handleStatus = async (status) => {
+    const projectId = location?.state?._id;
+    const data = { projectId, status }
+    const res = await axios.put('http://localhost:9000/client-biding-action', data);
+    if (res?.data?.success == true) {
+      Swal.fire({
+        title: "Actions",
+        text: res?.data?.message,
+        icon: "success"
+      })
+      fetchData()
+    } else {
+      Swal.fire({
+        title: "Actions",
+        text: res?.data?.message,
+        icon: "error"
+      })
+    }
+  }
   return (
-    <div className="crb-page">
-      <div className="container py-5">
-
-        {/* ========== HEADER ========== */}
-        <div className="text-center mb-5">
-          <span className="crb-eyebrow">Zentora Client</span>
-          <h2 className="crb-main-title">
-            Review <span className="crb-highlight">Proposals</span> &amp; Bids
-          </h2>
-          <p className="crb-subtitle">Evaluate top talent and pick the best freelancer for your project.</p>
-        </div>
-
-        {/* ========== STATS ROW ========== */}
-        <div className="row g-3 mb-5">
-
-        {/* Total Bids */}
-        <div className="col-6 col-md-3">
-          <div className="crb-stat-card crb-stat-card-teal">
-            <div className="crb-stat-icon"><FaGavel /></div>
-            <div className="crb-stat-num">12</div>
-            <div className="crb-stat-label">Total Bids</div>
-          </div>
-        </div>
-
-        {/* Avg Rating */}
-        <div className="col-6 col-md-3">
-          <div className="crb-stat-card crb-stat-card-amber">
-            <div className="crb-stat-icon"><FaStar /></div>
-            <div className="crb-stat-num">4.8</div>
-            <div className="crb-stat-label">Avg Rating</div>
-          </div>
-        </div>
-
-        {/* Freelancers */}
-        <div className="col-6 col-md-3">
-          <div className="crb-stat-card crb-stat-card-blue">
-            <div className="crb-stat-icon"><FaBriefcase /></div>
-            <div className="crb-stat-num">47</div>
-            <div className="crb-stat-label">Freelancers</div>
-          </div>
-        </div>
-
-        {/* Avg Response */}
-        <div className="col-6 col-md-3">
-          <div className="crb-stat-card crb-stat-card-purple">
-            <div className="crb-stat-icon"><FaClock /></div>
-            <div className="crb-stat-num">3d</div>
-            <div className="crb-stat-label">Avg Response</div>
-          </div>
+    <div className="container py-5">
+      <div className="row">
+        <div className="col-12">
+          <h2 className="dash-heading">Review Candidate Proposals</h2>
         </div>
       </div>
 
-        {/* ========== SINGLE BID CARD ========== */}
-        <div className="row g-4 justify-content-center">
-          <div className="col-12 col-lg-8 col-xl-6">
-            <div className="crb-bid-card">
+      {/* Project Details */}
+      <div className="row mb-4">
+        <div className="col-12">
+          <div className="dash-card">
+            <div className="row">
 
-              {/* Ribbon badge */}
-              <div className="crb-bid-ribbon">Top Rated</div>
-
-              {/* Freelancer profile header */}
-              <div className="crb-bid-header">
-                <div className="crb-avatar">RS</div>
-                <div className="crb-header-info">
-                  <span className="crb-bid-project">E-Commerce Website</span>
-                  <h4 className="crb-bid-name">Rahul Sharma</h4>
-                  <span className="crb-bid-role">Full-Stack Developer</span>
-                </div>
-                <div className="crb-bid-price-box">
-                  <span className="crb-bid-amount">
-                    <FaRupeeSign className="crb-rupee-icon" />45,000
-                  </span>
-                  <span className="crb-bid-delivery">
-                    <FaClock /> 25 days
-                  </span>
-                </div>
+              <div className="col-md-4 mb-3">
+                <strong>Project Title</strong>
+                <p className="mb-0">{location?.state?.title}</p>
               </div>
 
-              {/* Proposal section */}
-              <div className="crb-proposal-box">
-                <div className="crb-proposal-header">
-                  <FaFileAlt className="crb-proposal-icon" />
-                  <span className="crb-proposal-label">Cover Letter</span>
-                </div>
-                <p className="crb-proposal-text">
-                  I will build a fully responsive e-commerce platform with secure payment gateway, admin panel, and SEO optimization. I bring 4 years of professional experience in the MERN stack and have delivered 47+ projects successfully.
-                </p>
+              <div className="col-md-4 mb-3">
+                <strong>Category</strong>
+                <p className="mb-0">Web Development</p>
               </div>
 
-              {/* Skills tags */}
-              <div className="crb-skills-row">
-                <span className="crb-skill-tag">React</span>
-                <span className="crb-skill-tag">Node.js</span>
-                <span className="crb-skill-tag">MongoDB</span>
-                <span className="crb-skill-tag">Express</span>
-                <span className="crb-skill-tag">REST API</span>
+              <div className="col-md-4 mb-3">
+                <strong>Budget</strong>
+                <p className="mb-0">₹ {location?.state?.budget}</p>
               </div>
 
-              {/* Footer: stats + actions */}
-              <div className="crb-bid-footer">
-                <div className="crb-bid-footer-info">
-                  <span className="crb-info-chip" title="Rating">
-                    <FaStar className="text-warning" /> 4.9 (128)
-                  </span>
-                  <span className="crb-info-chip" title="Location">
-                    <FaMapMarkerAlt /> Mumbai, IN
-                  </span>
-                  <span className="crb-info-chip" title="Completed Projects">
-                    <FaTrophy /> 47 jobs
-                  </span>
-                </div>
-                <div className="crb-bid-footer-actions">
-                  <button className="crb-btn-accept" title="Hire immediately">
-                    <FaCheckCircle /> Accept &amp; Hire
-                  </button>
-                  <button className="crb-btn-decline" title="Decline bid">
-                    <FaTimesCircle /> Decline
-                  </button>
-                  <button className="crb-btn-save" title="Save to shortlist">
-                    <FaHeart />
-                  </button>
-                </div>
+              <div className="col-md-4 mb-3">
+                <strong>Duration</strong>
+                <p className="mb-0">{location?.state?.duration}</p>
+              </div>
+
+              <div className="col-md-4 mb-3">
+                <strong>Posted On</strong>
+                <p className="mb-0">{location?.state?.createdAt}</p>
+              </div>
+
+              <div className="col-md-4 mb-3">
+                <strong>Description</strong>
+                <p className="mb-0">{location?.state?.desc}</p>
               </div>
 
             </div>
           </div>
         </div>
-
       </div>
-    </div >
-  )
-}
 
-export default ClientReviewBids
+      {/* Candidate Table */}
+      <div className="row">
+        <div className="col-12">
+          <div className="dash-card">
+            <div className="table-responsive">
+              <table className="table dash-table mb-0">
+                <thead>
+                  <tr>
+                    <th>Freelancer</th>
+                    <th>Email</th>
+                    <th>Bid Amount</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {
+                    data?.map((item) => {
+                      return (<tr>
+                        <td>{item?.user_name}</td>
+                        <td>{item?.user_email}</td>
+                        <td>₹{item?.amount}</td>
+                        <td>
+                          <span className={item?.status == 'accept' ? 'status-ok' : 'status-bad'}>{item?.status}</span>
+                        </td>
+                        <td>
+                          <span className="status-ok me-2" onClick={() => handleStatus('accept')}>Accept</span>
+                          <span className="status-bad" onClick={() => handleStatus('reject')}>Reject</span>
+                        </td>
+                      </tr>)
+                    })
+                  }
+
+                </tbody>
+
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ClientReviewBids;

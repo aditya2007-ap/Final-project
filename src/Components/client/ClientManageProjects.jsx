@@ -60,10 +60,10 @@ const ClientManageProjects = () => {
                             <td>{item?.timeline || item?.duration}</td>
                             <td>{item?.bidsCount || 0}</td>
                             <td>
-                              <button onClick={()=>{
-                              navigate('/client-Review-bids',{state:item})
-                            }}
-                             type="button" className="action-btn action-btn-delete"><MdManageAccounts /> Details</button></td>
+                              <button onClick={() => {
+                                navigate('/client-Review-bids', { state: item })
+                              }}
+                                type="button" className="action-btn action-btn-delete"><MdManageAccounts /> Details</button></td>
                             <td>
                               <button type="button" className="action-btn action-btn-delete"><FaTrash /> Delete</button>
                             </td>
