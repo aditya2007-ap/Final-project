@@ -39,7 +39,7 @@ const TalentSection = () => {
     <div className="talent-section py-5 bg-white">
       <div className="container">
         {/* Section Title */}
-        <div className="row text-center mb-5">
+        <div className="row text-center mb-5" data-aos="fade-down">
           <div className="col-lg-8 mx-auto">
             <span className="badge bg-success-subtle text-success px-3 py-2 rounded-pill fw-bold text-uppercase mb-2">Featured Freelancers</span>
             <h2 className="display-6 fw-bold">Hire Top Vetted Talent</h2>
@@ -50,7 +50,7 @@ const TalentSection = () => {
         {/* Talent Cards */}
         <div className="row g-4">
           {talentList.map((talent, index) => (
-            <div className="col-md-4" key={index}>
+            <div className="col-md-4" key={index} data-aos="fade-up" data-aos-delay={(index + 1) * 100}>
               <div className="card h-100 border rounded-4 p-4 shadow-sm hover-shadow transition">
                 <div className="d-flex align-items-center gap-3 mb-3">
                   <img

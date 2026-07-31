@@ -7,11 +7,11 @@ const TrendingSection = () => {
         <>
             <div className="row py-5 trending">
                 <div className="col-sm-10 mx-auto">
-                    <div className='webheading'>Trending <b className='text-color1'>Contracts</b></div>
-                    <hr className='w-25 mx-auto text-color1'></hr>
+                    <div className='webheading' data-aos="fade-down">Trending <b className='text-color1'>Contracts</b></div>
+                    <hr className='w-25 mx-auto text-color1' data-aos="zoom-in" data-aos-delay="100"></hr>
                     <div className="row g-4">
                         {/* Card 1 */}
-                        <div className="col-lg-3 col-md-6">
+                        <div className="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
                             <div className="card shadow-lg border-0 mx-auto trendingCard position-relative p-2">
                                 <img src="/course-04-590x430.jpg" className='img-fluid rounded-2' alt="E-commerce Website Dev" />
                                 <span className='badge position-absolute' style={{ background: '#e65100' }}>Fixed Price</span>
@@ -36,7 +36,7 @@ const TrendingSection = () => {
                         </div>
 
                         {/* Card 2 */}
-                        <div className="col-lg-3 col-md-6">
+                        <div className="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
                             <div className="card shadow-lg border-0 mx-auto trendingCard position-relative p-2">
                                 <img src="/course-03-590x430.jpg" className='img-fluid rounded-2' alt="Financial Security" />
                                 <span className='badge position-absolute' style={{ background: '#31bea7' }}>☐ 12 Weeks</span>
@@ -61,7 +61,7 @@ const TrendingSection = () => {
                         </div>
 
                         {/* Card 3 */}
-                        <div className="col-lg-3 col-md-6">
+                        <div className="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
                             <div className="card shadow-lg border-0 mx-auto trendingCard position-relative p-2">
                                 <img src="/course-08-590x430.jpg" className='img-fluid rounded-2' alt="RESTful API" />
                                 <span className='badge position-absolute' style={{ background: '#31bea7' }}>☐ 20 Hours</span>
@@ -86,7 +86,7 @@ const TrendingSection = () => {
                         </div>
 
                         {/* Card 4 */}
-                        <div className="col-lg-3 col-md-6">
+                        <div className="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
                             <div className="card shadow-lg border-0 mx-auto trendingCard position-relative p-2">
                                 <img src="/course-12-590x430.jpg" className='img-fluid rounded-2' alt="Competitive Strategy" />
                                 <span className='badge position-absolute' style={{ background: '#e65100' }}>☐ 25 Hours</span>

@@ -20,11 +20,13 @@ const AdminProfile = () => {
     <div className="admin-plans-wrapper py-5">
       <div className="container">
         {/* Header Subtitle & Title */}
-        <span className="admin-subtitle text-uppercase fw-bold">ZENTORA ADMIN</span>
-        <h1 className="admin-title fw-bold mb-4">Admin Management Dashboard</h1>
+        <div data-aos="fade-down">
+          <span className="admin-subtitle text-uppercase fw-bold">ZENTORA ADMIN</span>
+          <h1 className="admin-title fw-bold mb-4">Admin Management Dashboard</h1>
+        </div>
 
         {/* Main Profile Card */}
-        <div className="admin-plans-card bg-white p-4 p-md-5 rounded-4 shadow-sm border">
+        <div className="admin-plans-card bg-white p-4 p-md-5 rounded-4 shadow-sm border" data-aos="zoom-in" data-aos-duration="800">
           
           {/* Header Block */}
           <div className="admin-plan-header-block mb-4 pb-3 border-bottom">

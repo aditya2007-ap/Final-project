@@ -106,11 +106,13 @@ const AdminPlans = () => {
     <div className="admin-plans-wrapper py-5">
       <div className="container">
         {/* Header Title */}
-        <span className="admin-subtitle text-uppercase fw-bold">ZENTORA ADMIN</span>
-        <h1 className="admin-title fw-bold mb-4">Admin Management Dashboard</h1>
+        <div data-aos="fade-down">
+          <span className="admin-subtitle text-uppercase fw-bold">ZENTORA ADMIN</span>
+          <h1 className="admin-title fw-bold mb-4">Admin Management Dashboard</h1>
+        </div>
 
         {/* Main Card */}
-        <div className="admin-plans-card bg-white p-4 p-md-5 rounded-4 shadow-sm border">
+        <div className="admin-plans-card bg-white p-4 p-md-5 rounded-4 shadow-sm border" data-aos="fade-up" data-aos-duration="800">
           <div className="admin-plan-header-block mb-4 pb-3 border-bottom">
             <h3 className="admin-plan-header-title fw-bold mb-2 align-items-center">
               <FiCreditCard className="text-color1 me-2" />
@@ -122,7 +124,7 @@ const AdminPlans = () => {
           </div>
 
           {/* Form Box */}
-          <div className="admin-plan-form-box p-4 rounded-4 border bg-light mb-5">
+          <div className="admin-plan-form-box p-4 rounded-4 border bg-light mb-5" data-aos="zoom-in" data-aos-delay="200">
             <h5 className="admin-plan-form-title fw-bold mb-4 align-items-center">
               <FiPlusCircle className="text-color1 me-2 fs-5" />
               Add New Credit Plan

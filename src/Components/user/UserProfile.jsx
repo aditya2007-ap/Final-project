@@ -43,7 +43,7 @@ const UserProfile = () => {
   return (
     <div className="container py-5">
       <div className="row justify-content-center">
-        <div className="col-lg-8">
+        <div className="col-lg-8" data-aos="zoom-in" data-aos-duration="800">
           <div className="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
             <div className="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom">
               <div className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold fs-3" style={{ width: '64px', height: '64px' }}>

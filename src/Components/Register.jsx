@@ -41,7 +41,7 @@ const Register = () => {
   }
   return (
     <div className="register-page d-flex justify-content-center align-items-center">
-      <div className="register-card shadow">
+      <div className="register-card shadow" data-aos="zoom-in" data-aos-duration="800">
         <p className="text-uppercase small-title mb-2">Get Started</p>
 
         <h1 className="fw-bold mb-2">Create Account</h1>

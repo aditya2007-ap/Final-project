@@ -7,10 +7,10 @@ const TestimonialSection = () => {
         <>
             <div className="row py-5 testimonials">
                 <div className="col-sm-10 mx-auto">
-                    <div className='webheading'>Our <b className='text-color1'>Testimonials</b></div>
-                    <hr className='w-25 mx-auto text-color1'></hr>
+                    <div className='webheading' data-aos="fade-down">Our <b className='text-color1'>Testimonials</b></div>
+                    <hr className='w-25 mx-auto text-color1' data-aos="zoom-in" data-aos-delay="100"></hr>
                     <div className="row mt-4 align-items-stretch g-4">
-                        <div className="col-lg-4 col-md-12 d-flex flex-column justify-content-center px-4">
+                        <div className="col-lg-4 col-md-12 d-flex flex-column justify-content-center px-4" data-aos="fade-right" data-aos-delay="100">
                             <div>
                                 <span className='badge bg-color1 px-3 py-2 rounded-pill fs-6 fw-normal text-white mb-2'>Testimonials</span>
                                 <h3 className='fw-bold my-3' style={{fontFamily: 'Inter'}}>What Our <span className='text-color1'>Zentora Community</span> Says</h3>
@@ -18,7 +18,7 @@ const TestimonialSection = () => {
                                 <Link to='#' className='btn bg-color1 text-light px-4 py-2 rounded-3 textbtn fw-semibold shadow-sm'>View All Testimonials</Link>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6">
+                        <div className="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
                             <div className="card border-0 shadow-sm rounded-4 p-4 h-100 d-flex flex-column justify-content-between">
                                 <div>
                                     <div className="d-flex align-items-center mb-3">
@@ -42,7 +42,7 @@ const TestimonialSection = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6">
+                        <div className="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
                             <div className="card border-0 shadow-sm rounded-4 p-4 h-100 d-flex flex-column justify-content-between">
                                 <div>
                                     <div className="d-flex align-items-center mb-3">

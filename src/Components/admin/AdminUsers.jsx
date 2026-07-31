@@ -16,14 +16,14 @@ fetchData()
   
   return (
     <div className="container py-5">
-      <div className="row">
+      <div className="row" data-aos="fade-down">
         <div className="col-12">
           <span className="dash-eyebrow">Zentora Admin</span>
           <h2 className="dash-heading">Manage Freelancers / Users</h2>
         </div>
       </div>
 
-      <div className="row">
+      <div className="row" data-aos="fade-up" data-aos-duration="800">
         <div className="col-12">
           <div className="dash-card">
 
@@ -35,7 +35,6 @@ fetchData()
                       <tr>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Role</th>
 
                         <th>Credits</th>
                         <th>Status</th>
@@ -48,7 +47,6 @@ fetchData()
                             <tr key={item?._id}>
                         <td>{item?.name}</td>
                         <td>{item?.email}</td>
-                        <td>{item?.type}</td>
 
                         <td>{item?.credit}</td>
                         <td><span className="status-ok">{item?.status ? "Active":"Deactivated"}</span></td>

@@ -20,7 +20,7 @@ const AdminProjects = () => {
 
   return (
     <div className="container py-5">
-      <div className="row mb-4">
+      <div className="row mb-4" data-aos="fade-down">
         <div className="col-12">
           <span className="dash-eyebrow">Zentora Admin</span>
           <h2 className="dash-heading d-flex align-items-center gap-2">
@@ -29,7 +29,7 @@ const AdminProjects = () => {
         </div>
       </div>
 
-      <div className="dash-card bg-white p-4 rounded-4 shadow-sm border">
+      <div className="dash-card bg-white p-4 rounded-4 shadow-sm border" data-aos="fade-up" data-aos-duration="800">
         <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
           <h4 className="fw-bold m-0">Live Projects ({data.length})</h4>
           <div className="input-group" style={{ maxWidth: '300px' }}>

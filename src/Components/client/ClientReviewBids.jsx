@@ -37,14 +37,14 @@ const ClientReviewBids = () => {
   }
   return (
     <div className="container py-5">
-      <div className="row">
+      <div className="row" data-aos="fade-down">
         <div className="col-12">
           <h2 className="dash-heading">Review Candidate Proposals</h2>
         </div>
       </div>
 
       {/* Project Details */}
-      <div className="row mb-4">
+      <div className="row mb-4" data-aos="fade-up" data-aos-duration="800">
         <div className="col-12">
           <div className="dash-card">
             <div className="row">

@@ -23,7 +23,7 @@ const ClientManageProjects = () => {
   return (
     <div className="container py-5">
       {/* Header Banner */}
-      <div className="row align-items-center mb-5 g-3">
+      <div className="row align-items-center mb-5 g-3" data-aos="fade-down">
         <div className="col-md-8">
           <span className="badge bg-primary mb-2 px-3 py-2 rounded-pill fw-bold text-uppercase">
             Zentora Employer Portal
@@ -44,7 +44,7 @@ const ClientManageProjects = () => {
       <div className="row g-4">
         {data && data.length > 0 ? (
           data.map((item, index) => (
-            <div className="col-lg-6 col-md-12" key={item?._id || index}>
+            <div className="col-lg-6 col-md-12" key={item?._id || index} data-aos="fade-up" data-aos-delay={(index + 1) * 100}>
               <div className="card h-100 border-0 p-4 rounded-4 shadow-sm client-project-glass-card">
                 {/* Top Title & Budget Row */}
                 <div className="d-flex justify-content-between align-items-start mb-3 gap-2">

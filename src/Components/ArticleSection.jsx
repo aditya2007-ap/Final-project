@@ -5,8 +5,8 @@ const ArticleSection = () => {
      <>
             <div className="row py-5 article">
                 <div className="col-sm-10 mx-auto">
-                    <div className='webheading'>Latest<b className='text-color1'> Articles</b></div>
-                    <hr className='w-25 mx-auto text-color1'></hr>
+                    <div className='webheading' data-aos="fade-down">Latest<b className='text-color1'> Articles</b></div>
+                    <hr className='w-25 mx-auto text-color1' data-aos="zoom-in" data-aos-delay="100"></hr>
                     <div className="row"></div>
                 </div>
             </div>

@@ -54,23 +54,23 @@ const UserProjects = () => {
   return (
     <div className="container py-5">
       {/* Header Section */}
-      <div className="row align-items-center mb-5 g-3">
+      <div className="row align-items-center mb-5 g-3" data-aos="fade-down">
         <div className="col-md-8">
           <span className="badge bg-primary mb-2 px-3 py-2 rounded-pill fw-bold text-uppercase">
             Zentora Freelance Jobs
           </span>
-          <h2 className="display-6 fw-bold mb-2 text-dark">Browse Live Client Projects</h2>
+          <h2 className="display-6 fw-bold mb-2 text-dark">Explore Live Projects</h2>
           <p className="text-secondary lead fs-6 m-0">
-            Find exciting projects posted by top clients and place your competitive proposals.
+            Browse open project scopes posted by global clients, evaluate requirements, and submit competitive proposal bids.
           </p>
         </div>
       </div>
 
-      {/* Glassmorphic Project Cards Grid */}
+      {/* Grid of Projects */}
       <div className="row g-4">
         {data && data.length > 0 ? (
           data.map((item, index) => (
-            <div className="col-lg-6 col-md-12" key={item._id || index}>
+            <div className="col-lg-6 col-md-12" key={item?._id || index} data-aos="fade-up" data-aos-delay={(index + 1) * 100}>
               <div className="card h-100 border-0 p-4 rounded-4 shadow-sm project-glass-card">
                 <div className="d-flex justify-content-between align-items-start mb-3 gap-2">
                   <div>

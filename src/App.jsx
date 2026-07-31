@@ -37,12 +37,14 @@ const App = () => {
   const location = useLocation()
   useEffect(() => {
     Aos.init({
-      offset: 200,
-      duration:600,
-      easing:'ease-in-sine'
+      offset: 100,
+      duration: 800,
+      easing: 'ease-in-out',
+      once: false,
     })
   }, [])
   useEffect(() => {
+    Aos.refresh();
     const info = JSON.parse(localStorage.getItem('info'));
     setUser(info)
   }, [location])

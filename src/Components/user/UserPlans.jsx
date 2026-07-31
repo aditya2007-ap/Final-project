@@ -50,7 +50,7 @@ const UserPlans = () => {
   }
   return (
     <div className="container py-5">
-      <div className="text-center mb-5">
+      <div className="text-center mb-5" data-aos="fade-down">
         <span className="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold text-uppercase mb-2">
           Freelancer Credit System
         </span>
@@ -59,8 +59,8 @@ const UserPlans = () => {
       </div>
 
       <div className="row g-4 justify-content-center">
-        {data?.map((item) => (
-          <div className="col-md-4" key={item?._id}>
+        {data?.map((item, index) => (
+          <div className="col-lg-4 col-md-6" key={item?._id} data-aos={item?.popular ? "zoom-in" : "fade-up"} data-aos-delay={(index + 1) * 100}>
             <div className={`card h-100 p-4 rounded-4 shadow-sm position-relative ${item?.popular ? 'border-primary border-2 bg-primary bg-opacity-10' : 'bg-white border'}`}>
               {item?.popular && (
                 <span className="position-absolute top-0 end-0 translate-middle-y me-4 badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold d-inline-flex align-items-center gap-1">

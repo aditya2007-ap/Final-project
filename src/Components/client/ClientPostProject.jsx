@@ -73,7 +73,7 @@ const ClientPostProject = () => {
       <div className="container">
 
         {/* Page Header */}
-        <div className="row mb-5">
+        <div className="row mb-5" data-aos="fade-down">
           <div className="col-12">
             <span className="cpp-eyebrow">Zentora for Clients</span>
             <h1 className="cpp-heading d-flex align-items-center gap-2">
@@ -86,7 +86,7 @@ const ClientPostProject = () => {
         </div>
 
         {/* Form Card */}
-        <div className="row">
+        <div className="row" data-aos="zoom-in" data-aos-duration="800">
           <div className="col-12">
             <div className="cpp-card">
 

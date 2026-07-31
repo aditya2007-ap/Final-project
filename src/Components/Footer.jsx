@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <>
       <div className="row footer bg-dark">
-        <div className="col-sm-3 footercol py-5">
+        <div className="col-sm-3 footercol py-5" data-aos="fade-up" data-aos-delay="100">
           <Link to='/'><img src="logo-white.svg" alt="" /></Link>
           <p>Zentora - Where Talent meets <br />
             opportunity . the future of <br />
@@ -19,7 +19,7 @@ const Footer = () => {
           <p><b>Call:</b>7266057178</p>
           <p><b>Email:</b>ap8703465@gmail.com</p>
         </div>
-        <div className="col-sm-3 py-5">
+        <div className="col-sm-3 py-5" data-aos="fade-up" data-aos-delay="200">
           <h5>Our Platform</h5>
           <ol className=' footerlists'>
             <li>About</li>
@@ -30,7 +30,7 @@ const Footer = () => {
             <li>Success Stories</li>
           </ol>
         </div>
-        <div className="col-sm-3 py-5">
+        <div className="col-sm-3 py-5" data-aos="fade-up" data-aos-delay="300">
           <h6>Links</h6>
           <div className="row footerlinks py-4">
             <Link to='/contact ' className=' footerlinks'>Contact Us</Link>
@@ -40,7 +40,7 @@ const Footer = () => {
             <Link to='/' className=' footerlinks'>coming soon</Link>
           </div>
         </div>
-        <div className="col-sm-3 pt-5">
+        <div className="col-sm-3 pt-5" data-aos="fade-up" data-aos-delay="400">
           <h6 >Contact Us</h6>
           <p>Enter your email address to register to our newsletter subscription</p>
           <div className="row p-3">

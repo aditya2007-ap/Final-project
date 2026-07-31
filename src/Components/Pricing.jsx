@@ -26,7 +26,7 @@ const Pricing = () => {
     <>
       <div className="container-fluid py-5 pricing">
         <div className="col-md-10 mx-auto">
-          <div className='pricingtophead text-center mb-4'>
+          <div className='pricingtophead text-center mb-4' data-aos="fade-down">
             <span><h5 className='fs-6 text-uppercase fw-bold text-color1'>FREELANCER PLANS</h5></span>
             <h2 className="fw-bold display-6">Buy Credits. Place Bids. Win Projects.</h2>
             <span className='pricingicon'><SiFreelancermap className='fs-1 m-3' /></span>
@@ -36,8 +36,13 @@ const Pricing = () => {
           </div>
           <div className="row pricingCardblock g-4 justify-content-center mx-auto my-2 p-2">
             {data && data.length > 0 ? (
-              data.map((item) => (
-                <div className="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch" key={item?._id}>
+              data.map((item, index) => (
+                <div 
+                  className="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch" 
+                  key={item?._id} 
+                  data-aos={item?.popular ? "zoom-in" : "fade-up"} 
+                  data-aos-delay={(index + 1) * 100}
+                >
                   <div 
                     className={`card p-4 shadow-sm w-100 pricingcards ${item?.popular ? 'pricingcards2 position-relative border-warning' : 'border-0'}`} 
                     style={item?.popular ? { border: '2px solid orangered' } : {}}

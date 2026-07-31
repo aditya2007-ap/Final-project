@@ -26,10 +26,13 @@
   z-index: 1040;
   background: transparent;
 }
-
+.navbar{
+ 
+}
 /* ── Navbar Outer Container (Frosted Glass) ── */
 .menu {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
+   background: #f7f9fa !important;
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -56,6 +59,7 @@
 
 .menu .navbar {
   padding: 4px 0 !important;
+  
 }
 
 /* ── Brand / Logo ── */

@@ -20,14 +20,14 @@ const AdminClients = () => {
   
   return (
     <div className="container py-5">
-      <div className="row">
+      <div className="row" data-aos="fade-down">
         <div className="col-12">
           <span className="dash-eyebrow">Zentora Admin</span>
           <h2 className="dash-heading">Manage Clients</h2>
         </div>
       </div>
 
-      <div className="row">
+      <div className="row" data-aos="fade-up" data-aos-duration="800">
         <div className="col-12">
           <div className="dash-card">
             <div className="row">

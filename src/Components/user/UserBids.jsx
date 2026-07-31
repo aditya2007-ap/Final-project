@@ -19,7 +19,7 @@ const UserBids = () => {
 
   return (
     <div className="container py-5">
-      <div className="row mb-4">
+      <div className="row mb-4" data-aos="fade-down">
         <div className="col-12">
           <span className="dash-eyebrow">Freelancer Dashboard</span>
           <h2 className="dash-heading d-flex align-items-center gap-2">
@@ -28,7 +28,7 @@ const UserBids = () => {
         </div>
       </div>
 
-      <div className="dash-card bg-white p-4 rounded-4 shadow-sm border">
+      <div className="dash-card bg-white p-4 rounded-4 shadow-sm border" data-aos="fade-up" data-aos-duration="800">
         <div className="table-responsive">
           <table className="table dash-table align-middle mb-0">
             <thead className="table-light">

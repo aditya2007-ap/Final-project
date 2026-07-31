@@ -49,7 +49,7 @@ const Services = () => {
     <div className="services-page py-5">
       <div className="container">
         {/* Section Header */}
-        <div className="row text-center mb-5">
+        <div className="row text-center mb-5" data-aos="fade-down">
           <div className="col-lg-8 mx-auto">
             <span className="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill fw-bold text-uppercase mb-2">Our Marketplace Services</span>
             <h1 className="display-6 fw-bold">Comprehensive Freelance Solutions</h1>
@@ -62,7 +62,7 @@ const Services = () => {
         {/* Services Grid */}
         <div className="row g-4">
           {servicesList.map((service, index) => (
-            <div className="col-md-6 col-lg-3" key={index}>
+            <div className="col-md-6 col-lg-3" key={index} data-aos="fade-up" data-aos-delay={((index % 4) + 1) * 100}>
               <div className="card h-100 border-0 shadow-sm p-4 rounded-4 service-card hover-top">
                 <div className="card-body p-0">
                   {service.icon}

@@ -16,15 +16,17 @@ const AdminDashboard = () => {
     <div className="admin-dashboard-wrapper">
       <div className="container">
         {/* Header */}
-        <span className="admin-subtitle">ZENTORA ADMIN</span>
-        <h1 className="admin-title">Admin Management Dashboard</h1>
+        <div data-aos="fade-down">
+          <span className="admin-subtitle">ZENTORA ADMIN</span>
+          <h1 className="admin-title">Admin Management Dashboard</h1>
+        </div>
 
         {/* Main Card */}
-        <div className="admin-main-card">
+        <div className="admin-main-card" data-aos="fade-up" data-aos-duration="800">
           {/* Stat Cards */}
           <div className="row g-4 mb-4">
             {/* Card 1: Total Freelancers */}
-            <div className="col-md-4">
+            <div className="col-md-4" data-aos="fade-up" data-aos-delay="100">
               <div className="admin-stat-card card-teal">
                 <span className="badge-live">Live</span>
                 <div className="d-flex align-items-center gap-3">
@@ -41,7 +43,7 @@ const AdminDashboard = () => {
             </div>
 
             {/* Card 2: Active Clients */}
-            <div className="col-md-4">
+            <div className="col-md-4" data-aos="fade-up" data-aos-delay="200">
               <div className="admin-stat-card card-pink">
                 <div className="d-flex align-items-center gap-3">
                   <div className="admin-card-icon pink">
@@ -57,7 +59,7 @@ const AdminDashboard = () => {
             </div>
 
             {/* Card 3: Live Projects */}
-            <div className="col-md-4">
+            <div className="col-md-4" data-aos="fade-up" data-aos-delay="300">
               <div className="admin-stat-card card-teal">
                 <div className="d-flex align-items-center gap-3">
                   <div className="admin-card-icon teal">
@@ -73,10 +75,12 @@ const AdminDashboard = () => {
           </div>
 
           {/* Heading */}
-          <h4 className="admin-section-title">Recent Administration Log</h4>
+          <h4 className="admin-section-title" data-aos="fade-up">Recent Administration Log</h4>
 
           {/* Table */}
-          <AdminProjects/>
+          <div data-aos="fade-up" data-aos-delay="100">
+            <AdminProjects/>
+          </div>
         </div>
       </div>
     </div>

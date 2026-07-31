@@ -1,0 +1,89 @@
+/* ============================================================
+   NAVBAR SPARKLE SWEEP EFFECT (index.css)
+   ============================================================ */
+
+/* Ensure the navbar container relative positioning & clipping for sparkle sheen */
+.navbar-sticky-outer .menu {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* 1. Sparkle Sweep Light Beam on Navbar & .sparkle-badge */
+.navbar-sticky-outer .menu::after,
+.sparkle-badge::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -50px;
+  width: 35px;
+  height: calc(100% + 4px);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 20%,
+    rgba(255, 255, 255, 0.85) 50%,
+    rgba(255, 255, 255, 0.2) 80%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  animation: sparkleSweep 2.5s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Brighten sheen on hover for responsive mirror feedback */
+.navbar-sticky-outer .menu:hover::after {
+  animation: sparkleSweep 1.8s ease-in-out infinite;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 15%,
+    rgba(255, 255, 255, 0.95) 50%,
+    rgba(255, 255, 255, 0.3) 85%,
+    transparent 100%
+  );
+}
+
+/* Sparkle sweep keyframes sweeping across the container width */
+@keyframes sparkleSweep {
+  0% {
+    left: -60px;
+  }
+  100% {
+    left: calc(100% + 60px);
+  }
+}
+
+/* 2. Top Edge Subtle Highlight Line */
+.navbar-sticky-outer .menu::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.8) 25%,
+    rgba(230, 81, 0, 0.8) 50%,
+    rgba(255, 255, 255, 0.8) 75%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 11;
+  opacity: 0.85;
+}
+
+/* 3. Interactive hover effects for Nav Brand & Nav Links */
+.navbar-sticky-outer .menu .navbar-brand,
+.navbar-sticky-outer .menu .nav-link {
+  position: relative;
+  z-index: 12;
+  transition: text-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-sticky-outer .menu .nav-link:hover {
+  text-shadow: 0 0 10px rgba(196, 183, 183, 0.8), 0 0 20px rgba(230, 81, 0, 0.4);
+}
+

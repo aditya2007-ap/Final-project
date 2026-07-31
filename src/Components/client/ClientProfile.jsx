@@ -41,7 +41,7 @@ const ClientProfile = () => {
   return (
     <div className="container py-5">
       <div className="row justify-content-center">
-        <div className="col-lg-8">
+        <div className="col-lg-8" data-aos="zoom-in" data-aos-duration="800">
           <div className="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
             <h3 className="fw-bold mb-1">Client Profile Settings</h3>
             <p className="text-muted small mb-4">Manage your company information and contact preferences.</p>
