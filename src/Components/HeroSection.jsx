@@ -12,14 +12,15 @@ const HeroSection = () => {
             <div className="col-sm-6 position-relative p-5  mx-auto">
               <h3 className='herotitle text-dark fw-bold '>
                 Where Talent <b className='text-color1'>Meets <br />Opportunity</b> with <br />
-                <span className="text-color1 d-inline-block">
+                <span className="text-color1 d-inline-block fw-bold">
                   <Typewriter
                     options={{
                       strings: ['Zentora'],
                       autoStart: true,
                       loop: true,
-                      deleteSpeed: 50,
-                      delay: 100,
+                      deleteSpeed: 70,
+                      delay: 150,
+                      cursorStyle:'none'
                     }}
                   />
                 </span>

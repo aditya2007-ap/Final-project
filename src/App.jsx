@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 import './App.css';
@@ -31,11 +31,21 @@ import UserProfile from './Components/user/UserProfile';
 import UserPlans from './Components/user/UserPlans';
 
 const App = () => {
+  const [user, setUser] = useState('');
+  const location = useLocation()
+  useEffect(() => {
+    const info = JSON.parse(localStorage.getItem('info'));
+    setUser(info)
+  }, [location])
+  console.log(user,);
+  
   return (
     <>
-      <BrowserRouter>
+    
+        
         <Navbar />
         <Routes>
+          
           {/* common url */}
           <Route path='/' element={<Home />} />
           <Route path='/register' element={<Register />} />
@@ -46,6 +56,7 @@ const App = () => {
           <Route path='/about-us' element={<AboutUs />} />
 
           {/* ADMIN URL */}
+          {user?.type=='admin' && <>
           <Route path='/admin-dashboard' element={<AdminDashboard />} />
           <Route path='/admin-users' element={<AdminUsers />} />
           <Route path='/admin-clients' element={<AdminClients />} />
@@ -53,22 +64,29 @@ const App = () => {
           <Route path='/admin-bids' element={<AdminBids />} />
           <Route path='/admin-profile' element={<AdminProfile />} />
           <Route path='/admin-plans' element={<AdminPlans />} />
+          </>}
+          
           {/* CLIENT URL */}
+          {user?.type=='client' && <>
           <Route path='/client-dashboard' element={<ClientDashboard />} />
           <Route path='/client-post-project' element={<ClientPostProject />} />
           <Route path='/client-manage-project' element={<ClientManageProject />} />
           <Route path='/client-Review-bids' element={<ClientReviewBids />} />
           <Route path='/client-profile' element={<ClientProfile />} />
+          </>}
+          
 
           {/* USERS URL */}
-          <Route path='/user-dashboard' element={<UserDashboard />} />
+          {user?.type=='user' && <>
+           <Route path='/user-dashboard' element={<UserDashboard />} />
           <Route path='/user-project' element={<UserProject />} />
           <Route path='/user-bids' element={<UserBids />} />
           <Route path='/user-profile' element={<UserProfile />} />
           <Route path='/user-plans' element={<UserPlans />} />
+          </>}
+         
         </Routes>
         <Footer />
-      </BrowserRouter>
     </>
   )
 }
