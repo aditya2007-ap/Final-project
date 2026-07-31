@@ -10,7 +10,7 @@ const TrustedSection = () => {
                     <div className='webheading'>Trusted By<b className='text-color1'> Teams</b></div>
                     <hr className='w-25 mx-auto text-color1'></hr>
                     <div className="row mt-5 align-items-center">
-                        <div className="col-lg-6 col-md-6 position-relative mb-5 pb-4">
+                        <div data-aos="fade-right" className="col-lg-6 col-md-6 position-relative mb-5 pb-4">
                             <img src="/about-01.webp" alt="About Us" className='img-fluid rounded-4 shadow' />
                             <div className='shadow-lg position-absolute trustedimg'>
                                 <img src="/Image-2.png" alt="Team" className='img-fluid rounded-3' />
@@ -26,7 +26,7 @@ const TrustedSection = () => {
                             </div>
                         </div>
                         <div className="col-lg-6 col-md-6">
-                            <div className="trusteddiv">
+                            <div data-aos="fade-left" className="trusteddiv">
                                 <h3 className='fw-bold mb-3' style={{fontFamily: 'Inter'}}>We Connect Talent <span className='text-color1'>Globally</span></h3>
                                 <p className='text-secondary lh-lg'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis illum quis totam aliquam autem nam laboriosam quisquam architecto ratione, quibusdam veniam sunt reiciendis fugiat? Magnam cum distinctio omnis neque ullam?</p>
                                 <p className='text-secondary lh-lg'>Architecto iusto deleniti sint nobis dolorem quod natus minima quos. Fuga ipsa quidem a hic culpa possimus illum in consectetur labore.</p>

@@ -11,11 +11,13 @@ const HeroSection = () => {
           <div className="row ps-5">
             <div className="col-sm-6 position-relative p-5  mx-auto">
               <h3 className='herotitle text-dark fw-bold '>
-                Where Talent <b className='text-color1'>Meets <br />Opportunity</b> with <br />
-                <span className="text-color1 d-inline-block fw-bold">
-                  <Typewriter
+                Where Talent <b className='text-color1'>Meets <br />Opportunity</b><br />
+                <span className="text-color1 d-inline-block fw-bold ">
+                  <div className='d-flex gap-3 '>
+                    <span className='text-dark'>with</span>
+                    <Typewriter
                     options={{
-                      strings: ['Zentora'],
+                      strings: [' Zentora'],
                       autoStart: true,
                       loop: true,
                       deleteSpeed: 70,
@@ -23,6 +25,7 @@ const HeroSection = () => {
                       cursorStyle:'none'
                     }}
                   />
+                  </div>
                 </span>
               </h3>
               <p className='herodes my-3'>Connect. Collaborate. Earn. Post projects, discover global <br /> talent, compare competitive bids, and hire top freelancers <br /> with secure escrow payments on Zentora.</p>

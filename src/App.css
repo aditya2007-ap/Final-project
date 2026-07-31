@@ -3593,3 +3593,11 @@ h1 {
 
 
 
+
+
+.error-page{
+  padding: 50px 0px;
+  box-sizing: border-box;
+  background-size: cover;
+  background-repeat: none;
+}

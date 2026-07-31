@@ -1,5 +1,4 @@
 import React from 'react'
-
 const ContactUs = () => {
   return (
      <>
@@ -29,5 +28,4 @@ const ContactUs = () => {
         </>
   )
 }
-
 export default ContactUs

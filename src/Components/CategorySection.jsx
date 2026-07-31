@@ -19,9 +19,9 @@ const CategorySection = () => {
 
           {/* Equal card spacing using Bootstrap g-4 */}
           <div className="row g-4 mt-2">
-            <div className="col-lg-4 col-md-6">
-              <div className="card border border-0 shadow-sm mx-auto catcard ccard1 h-100">
-                <div className="row p-4 align-items-center">
+            <div  data-aos="fade-right" className="col-lg-4 col-md-6">
+              <div  className="card border border-0 shadow-sm mx-auto catcard ccard1 h-100">
+                <div  className="row p-4 align-items-center">
                   <div className="col-2">
                     <FaCode className='fs-2 mx-1 caticon' style={{ color: '#31bea7' }} />
                   </div>
@@ -32,7 +32,7 @@ const CategorySection = () => {
               </div>
             </div>
 
-            <div className="col-lg-4 col-md-6">
+            <div data-aos="zoom-in" className="col-lg-4 col-md-6">
               <div className="card border border-0 shadow-sm mx-auto catcard ccard2 h-100">
                 <div className="row p-4 align-items-center">
                   <div className="col-2 caticon">
@@ -45,7 +45,7 @@ const CategorySection = () => {
               </div>
             </div>
 
-            <div className="col-lg-4 col-md-6">
+            <div  data-aos="fade-left" className="col-lg-4 col-md-6">
               <div className="card border border-0 shadow-sm mx-auto catcard ccard3 h-100">
                 <div className="row p-4 align-items-center">
                   <div className="col-2 caticon">
@@ -58,7 +58,8 @@ const CategorySection = () => {
               </div>
             </div>
 
-            <div className="col-lg-4 col-md-6">
+            <div data-aos="fade-up"
+     data-aos-anchor-placement="top-bottom" className="col-lg-4 col-md-6">
               <div className="card border border-0 shadow-sm mx-auto catcard ccard4 h-100">
                 <div className="row p-4 align-items-center">
                   <div className="col-2 caticon">
@@ -71,7 +72,8 @@ const CategorySection = () => {
               </div>
             </div>
 
-            <div className="col-lg-4 col-md-6">
+            <div  data-aos="fade-up"
+     data-aos-anchor-placement="top-bottom" className="col-lg-4 col-md-6">
               <div className="card border border-0 shadow-sm mx-auto catcard ccard5 h-100">
                 <div className="row p-4 align-items-center">
                   <div className="col-2 caticon">
@@ -84,7 +86,8 @@ const CategorySection = () => {
               </div>
             </div>
 
-            <div className="col-lg-4 col-md-6">
+            <div data-aos="fade-up"
+     data-aos-anchor-placement="top-bottom" className="col-lg-4 col-md-6">
               <div className="card border border-0 shadow-sm mx-auto catcard ccard6 h-100">
                 <div className="row p-4 align-items-center">
                   <div className="col-2 caticon">
@@ -97,7 +100,8 @@ const CategorySection = () => {
               </div>
             </div>
 
-            <div className="col-lg-4 col-md-6">
+            <div data-aos="fade-up"
+     data-aos-anchor-placement="top-bottom" className="col-lg-4 col-md-6">
               <div className="card border border-0 shadow-sm mx-auto catcard ccard7 h-100">
                 <div className="row p-4 align-items-center">
                   <div className="col-2 caticon">
@@ -110,7 +114,8 @@ const CategorySection = () => {
               </div>
             </div>
 
-            <div className="col-lg-4 col-md-6">
+            <div data-aos="fade-up"
+     data-aos-anchor-placement="top-bottom" className="col-lg-4 col-md-6">
               <div className="card border border-0 shadow-sm mx-auto catcard ccard8 h-100">
                 <div className="row p-4 align-items-center">
                   <div className="col-2 caticon">
@@ -123,7 +128,8 @@ const CategorySection = () => {
               </div>
             </div>
 
-            <div className="col-lg-4 col-md-6">
+            <div data-aos="fade-up"
+     data-aos-anchor-placement="top-bottom" className="col-lg-4 col-md-6">
               <div className="card border border-0 shadow-sm mx-auto catcard ccard9 h-100">
                 <div className="row p-4 align-items-center">
                   <div className="col-2 caticon">

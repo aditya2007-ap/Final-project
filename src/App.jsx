@@ -29,34 +29,42 @@ import UserProject from './Components/user/UserProjects';
 import UserBids from './Components/user/UserBids';
 import UserProfile from './Components/user/UserProfile';
 import UserPlans from './Components/user/UserPlans';
-
+import Error from './Components/Error';
+import 'aos/dist/aos.css';
+import Aos from 'aos';
 const App = () => {
   const [user, setUser] = useState('');
   const location = useLocation()
+  useEffect(() => {
+    Aos.init({
+      offset: 200,
+      duration:600,
+      easing:'ease-in-sine'
+    })
+  }, [])
   useEffect(() => {
     const info = JSON.parse(localStorage.getItem('info'));
     setUser(info)
   }, [location])
   console.log(user,);
-  
+
   return (
     <>
-    
-        
-        <Navbar />
-        <Routes>
-          
-          {/* common url */}
-          <Route path='/' element={<Home />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/services' element={<Services />} />
-          <Route path='/pricing' element={<Pricing />} />
-          <Route path='/contact-us' element={<ContactUs />} />
-          <Route path='/about-us' element={<AboutUs />} />
 
-          {/* ADMIN URL */}
-          {user?.type=='admin' && <>
+      <Navbar />
+      <Routes>
+
+        {/* common url */}
+        <Route path='/' element={<Home />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/services' element={<Services />} />
+        <Route path='/pricing' element={<Pricing />} />
+        <Route path='/contact-us' element={<ContactUs />} />
+        <Route path='/about-us' element={<AboutUs />} />
+
+        {/* ADMIN URL */}
+        {user?.type == 'admin' && <>
           <Route path='/admin-dashboard' element={<AdminDashboard />} />
           <Route path='/admin-users' element={<AdminUsers />} />
           <Route path='/admin-clients' element={<AdminClients />} />
@@ -64,29 +72,29 @@ const App = () => {
           <Route path='/admin-bids' element={<AdminBids />} />
           <Route path='/admin-profile' element={<AdminProfile />} />
           <Route path='/admin-plans' element={<AdminPlans />} />
-          </>}
-          
-          {/* CLIENT URL */}
-          {user?.type=='client' && <>
+        </>}
+
+        {/* CLIENT URL */}
+        {user?.type == 'client' && <>
           <Route path='/client-dashboard' element={<ClientDashboard />} />
           <Route path='/client-post-project' element={<ClientPostProject />} />
           <Route path='/client-manage-project' element={<ClientManageProject />} />
           <Route path='/client-Review-bids' element={<ClientReviewBids />} />
           <Route path='/client-profile' element={<ClientProfile />} />
-          </>}
-          
+        </>}
 
-          {/* USERS URL */}
-          {user?.type=='user' && <>
-           <Route path='/user-dashboard' element={<UserDashboard />} />
+
+        {/* USERS URL */}
+        {user?.type == 'user' && <>
+          <Route path='/user-dashboard' element={<UserDashboard />} />
           <Route path='/user-project' element={<UserProject />} />
           <Route path='/user-bids' element={<UserBids />} />
           <Route path='/user-profile' element={<UserProfile />} />
           <Route path='/user-plans' element={<UserPlans />} />
-          </>}
-         
-        </Routes>
-        <Footer />
+        </>}
+        <Route path='*' element={<h1 className='text-center '><Error /></h1>} />
+      </Routes>
+      <Footer />
     </>
   )
 }
