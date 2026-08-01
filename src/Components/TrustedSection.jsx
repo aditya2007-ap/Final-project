@@ -11,9 +11,11 @@ const TrustedSection = () => {
                     <hr className='w-25 mx-auto text-color1' data-aos="zoom-in" data-aos-delay="100"></hr>
                     <div className="row mt-5 align-items-center">
                         <div data-aos="fade-right" data-aos-duration="1000" className="col-lg-6 col-md-6 position-relative mb-5 pb-4">
-                            <img src="/about-01.webp" alt="About Us" className='img-fluid rounded-4 shadow' />
+                            <img src="shape-05.png" alt=""  className='trustedimg1st'/>
+                            <img src="/about-01.webp" alt="About Us" className='img-fluid rounded-4 shadow'  />
                             <div className='shadow-lg position-absolute trustedimg' data-aos="zoom-in" data-aos-delay="300">
                                 <img src="/Image-2.png" alt="Team" className='img-fluid rounded-3' />
+                                <img src="shape-02.png" alt=""  className='trustedimg2nd'/>
                             </div>
                             <div className='shadow-lg trusted3rddiv d-flex align-items-center gap-3 p-3' data-aos="fade-up" data-aos-delay="400">
                                 <div className='trustedicon d-flex align-items-center justify-content-center'>
@@ -49,6 +51,8 @@ const TrustedSection = () => {
                                         <span className='fw-medium'>24X7 Priority Support</span>
                                     </li>
                                 </ul>
+                                              <div className='yellowring position-absolute' data-aos="zoom-in" data-aos-delay="400"></div>
+
                             </div>
                         </div>
                     </div>

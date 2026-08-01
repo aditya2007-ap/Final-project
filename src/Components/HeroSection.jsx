@@ -35,6 +35,7 @@ const HeroSection = () => {
               <img src="/shape-13.png" alt="" className='herodot position-absolute' data-aos="zoom-in" data-aos-delay="400" />
             </div>
             <div className="col-sm-6 position-relative" data-aos="fade-left" data-aos-duration="1000">
+              <img src="shape-15.png" alt="" className='heromovingimg'/>
               <img src="/girl-1.webp" alt="" className='img-fluid w-75' data-aos="zoom-in" data-aos-delay="200" />
               <img src="/h-1-shape-01.png" alt="" className='position-absolute herosideimg' data-aos="fade-up" data-aos-delay="300" />
 

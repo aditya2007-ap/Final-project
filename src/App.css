@@ -257,6 +257,52 @@
   }
 }
 
+.heromovingimg{
+  top: 100px;
+  left: 0px;
+  position: absolute;
+
+  animation: moveRight 6s linear infinite alternate;
+}
+ /* Keyframes for left-to-right movement */
+  @keyframes moveRight {
+    0% {
+      left: 0;
+    }
+    100% {
+      left: calc(100% - 50px); /* 100% width minus box width */
+    }
+  }
+  .trustedimg1st{
+    position: absolute;
+    top:-50px;
+    left: -100px;
+    z-index: 0;
+    background-position:50% ;
+  }
+  .trustedimg2nd{
+        position: absolute;
+        left: 10px;
+bottom: -350px;
+  }
+  .trustedimg1st:hover{
+    transform:rotate(350deg);
+  }
+  .yellowring{
+    position: absolute;
+    right: -160px;
+    top: 190px;
+    height: 90px;
+    width: 90px;
+    border:10px solid gold ;
+    border-radius: 50%;
+animation: upDown 4s ease-out infinite alternate;
+  }
+   @keyframes upDown {
+        0%   { transform: translateY(0); }
+        50%  { transform: translateY(-100px); } /* Move up */
+        100% { transform: translateY(0); }     /* Back to start */
+    }
 /* ==========================================
    COUNTER SECTION
    ========================================== */
