@@ -24,7 +24,7 @@ const Home = () => {
     <Pricing/>
     <CertificateSection/>
     <PartnerSection/>
-    <ArticleSection/>
+    {/* <ArticleSection/> */}
   </>)
 }
 

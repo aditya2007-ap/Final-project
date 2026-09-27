@@ -33,14 +33,7 @@ const AdminProjects = () => {
         <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
           <h4 className="fw-bold m-0">Live Projects ({data.length})</h4>
           <div className="input-group" style={{ maxWidth: '300px' }}>
-            <span className="input-group-text bg-light border-end-0">
-              <FaSearch className="text-muted" />
-            </span>
-            <input
-              type="text"
-              className="form-control bg-light border-start-0"
-              placeholder="Search projects..."
-            />
+           
           </div>
         </div>
 

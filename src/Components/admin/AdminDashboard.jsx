@@ -8,7 +8,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     fetchData()
   }, [])
-  const fetchData = async() => {
+  const fetchData = async () => {
     const res = await axios.get('http://localhost:9000/admin-stats')
     setData(res?.data?.result)
   }
@@ -68,6 +68,8 @@ const AdminDashboard = () => {
                   <div className='px-4'>
                     <div className="stat-number">{data?.projects}</div>
                     <div className="stat-title">Live Projects</div>
+                    <div className="stat-subtitle">Projects by Clients</div>
+
                   </div>
                 </div>
               </div>
@@ -79,7 +81,7 @@ const AdminDashboard = () => {
 
           {/* Table */}
           <div data-aos="fade-up" data-aos-delay="100">
-            <AdminProjects/>
+            <AdminProjects />
           </div>
         </div>
       </div>
