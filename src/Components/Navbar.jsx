@@ -1,31 +1,42 @@
 import React, { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { FaCheck, FaPhoneAlt, FaEnvelope, FaArrowRight } from 'react-icons/fa'
+
+/* ─── helper: always returns the correct active class ─── */
+const navCls = ({ isActive }) => `nav-link${isActive ? ' active' : ''}`
 
 const Navbar = () => {
   const [data, setData] = useState(null);
-
   const location = useLocation();
 
+  /* Re-read user info on every route change AND on storage events
+     (covers login/logout from another tab or user switch) */
   useEffect(() => {
-    const info = JSON.parse(localStorage.getItem('info'));
-    setData(info);
-  }, [location.pathname]);
+    const readInfo = () => {
+      const info = JSON.parse(localStorage.getItem('info'));
+      setData(info);
+    };
 
+    readInfo();                                         // run on path change
+    window.addEventListener('storage', readInfo);      // run on cross-tab change
+    return () => window.removeEventListener('storage', readInfo);
+  }, [location.pathname]);
 
   const path = location.pathname;
 
   if (path.startsWith('/admin') && data?.type === 'admin') {
-    return <AdminMenu />
+    return <AdminMenu data={data} />
   } else if (path.startsWith('/client') && data?.type === 'client') {
-    return <ClientMenu />
+    return <ClientMenu data={data} />
   } else if (path.startsWith('/user') && data?.type === 'user') {
-    return <UserMenu />
+    return <UserMenu data={data} />
   } else {
     return <CommonMenu data={data} />
   }
 }
 
+/* ════════════════════════════════════════════════════════
+   COMMON MENU  (public / not fully in role-specific area)
+   ════════════════════════════════════════════════════════ */
 const CommonMenu = ({ data }) => {
   const dashboardPath = data?.type ? `/${data.type}-dashboard` : null;
 
@@ -51,39 +62,49 @@ const CommonMenu = ({ data }) => {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ms-auto align-items-center">
                 <li className="nav-item">
-                  <Link className="nav-link active" aria-current="page" to="/">
+                  {/* `end` ensures "/" only matches the exact root path */}
+                  <NavLink className={navCls} to="/" end>
                     Home
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/about-us">
+                  <NavLink className={navCls} to="/about-us">
                     About Us
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/services">
+                  <NavLink className={navCls} to="/services">
                     Services
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/pricing">
+                  <NavLink className={navCls} to="/pricing">
                     Pricing
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/contact-us">
+                  <NavLink className={navCls} to="/contact-us">
                     Contact us
-                  </Link>
+                  </NavLink>
                 </li>
                 {data?.type ? (
                   <>
                     <li className="nav-item">
-                      <Link className="nav-link fw-semibold text-primary" to={dashboardPath}>
+                      <NavLink className={({ isActive }) => `nav-link fw-semibold text-primary${isActive ? ' active' : ''}`} to={dashboardPath}>
                         Dashboard
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="nav-item">
-                      <Link className="nav-link text-danger" to="/login" onClick={() => localStorage.removeItem('info')}>
+                      <NavLink className={navCls} to={`/${data.type}-profile`}>
+                        Profile
+                      </NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        className="nav-link text-danger"
+                        to="/login"
+                        onClick={() => localStorage.removeItem('info')}
+                      >
                         Logout
                       </Link>
                     </li>
@@ -91,14 +112,14 @@ const CommonMenu = ({ data }) => {
                 ) : (
                   <>
                     <li className="nav-item">
-                      <Link className="nav-link" to="/register">
+                      <NavLink className={navCls} to="/register">
                         Register
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="nav-item">
-                      <Link className="nav-link" to="/login">
+                      <NavLink className={navCls} to="/login">
                         Login
-                      </Link>
+                      </NavLink>
                     </li>
                   </>
                 )}
@@ -106,13 +127,14 @@ const CommonMenu = ({ data }) => {
             </div>
           </div>
         </nav>
-
       </div>
     </div>
-
   </>)
 }
 
+/* ════════════════════════════════════════════════════════
+   ADMIN MENU
+   ════════════════════════════════════════════════════════ */
 const AdminMenu = () => {
   const navigate = useNavigate();
   const logout = () => {
@@ -141,39 +163,39 @@ const AdminMenu = () => {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ms-auto align-items-center">
                 <li className="nav-item">
-                  <Link className="nav-link active" aria-current="page" to="/admin-dashboard">
+                  <NavLink className={navCls} to="/admin-dashboard">
                     Dashboard
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/admin-plans">
+                  <NavLink className={navCls} to="/admin-plans">
                     Plans
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/admin-users">
+                  <NavLink className={navCls} to="/admin-users">
                     Users
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/admin-clients">
+                  <NavLink className={navCls} to="/admin-clients">
                     Clients
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/admin-project">
+                  <NavLink className={navCls} to="/admin-project">
                     Projects
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/admin-bids">
+                  <NavLink className={navCls} to="/admin-bids">
                     Bids
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/admin-profile">
+                  <NavLink className={navCls} to="/admin-profile">
                     Profile
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
                   <button className="nav-link text-danger border-0 bg-transparent" onClick={logout}>
@@ -184,13 +206,14 @@ const AdminMenu = () => {
             </div>
           </div>
         </nav>
-
       </div>
     </div>
-
   </>)
 }
 
+/* ════════════════════════════════════════════════════════
+   CLIENT MENU
+   ════════════════════════════════════════════════════════ */
 const ClientMenu = () => {
   const navigate = useNavigate();
   const logout = () => {
@@ -220,24 +243,24 @@ const ClientMenu = () => {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ms-auto align-items-center">
                 <li className="nav-item">
-                  <Link className="nav-link active" aria-current="page" to="/client-dashboard">
+                  <NavLink className={navCls} to="/client-dashboard">
                     Dashboard
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/client-post-project">
+                  <NavLink className={navCls} to="/client-post-project">
                     Post Project
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/client-manage-project">
+                  <NavLink className={navCls} to="/client-manage-project">
                     Manage Project
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/client-profile">
+                  <NavLink className={navCls} to="/client-profile">
                     Profile
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
                   <button className="nav-link text-danger border-0 bg-transparent" onClick={logout}>
@@ -248,13 +271,14 @@ const ClientMenu = () => {
             </div>
           </div>
         </nav>
-
       </div>
     </div>
-
   </>)
 }
 
+/* ════════════════════════════════════════════════════════
+   USER MENU
+   ════════════════════════════════════════════════════════ */
 const UserMenu = () => {
   const navigate = useNavigate();
   const logout = () => {
@@ -284,29 +308,29 @@ const UserMenu = () => {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ms-auto align-items-center">
                 <li className="nav-item">
-                  <Link className="nav-link active" aria-current="page" to="/user-dashboard">
+                  <NavLink className={navCls} to="/user-dashboard">
                     Dashboard
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/user-plans">
+                  <NavLink className={navCls} to="/user-plans">
                     Plans
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/user-project">
+                  <NavLink className={navCls} to="/user-project">
                     Projects
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/user-bids">
+                  <NavLink className={navCls} to="/user-bids">
                     My Bids
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/user-profile">
+                  <NavLink className={navCls} to="/user-profile">
                     Profile
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
                   <button className="nav-link text-danger border-0 bg-transparent" onClick={logout}>
@@ -317,10 +341,9 @@ const UserMenu = () => {
             </div>
           </div>
         </nav>
-
       </div>
     </div>
-
   </>)
 }
+
 export default Navbar

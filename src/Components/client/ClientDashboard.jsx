@@ -104,7 +104,7 @@ const ClientDashboard = () => {
           <div className="card border-0 shadow-sm p-4 rounded-4 bg-white h-100">
             <h5 className="fw-bold mb-2 text-dark">Review Freelancer Bids</h5>
             <p className="text-muted small mb-4">Evaluate freelancer quotes, ratings, and award project contracts.</p>
-            <Link to="/client-Review-bids" className="btn btn-outline-danger w-100 mt-auto fw-semibold">
+            <Link to="/client-manage-project" className="btn btn-outline-danger w-100 mt-auto fw-semibold">
               Review Bids
             </Link>
           </div>

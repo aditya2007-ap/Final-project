@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom'
-import { FaBolt, FaFolderOpen, FaGavel, FaCheckCircle, FaSearch, FaCoins } from 'react-icons/fa';
+import { FaBolt, FaFolderOpen, FaGavel, FaCheckCircle, FaSearch, FaCoins, FaBan } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const UserDashboard = () => {
   const [data, setData] = useState(null)
   const [info, setInfo] = useState(null)
+  const [isBlocked, setIsBlocked] = useState(false)
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('info'))
@@ -17,9 +19,37 @@ const UserDashboard = () => {
 
   const fetchData = async (userId) => {
     try {
+      // 1. Fetch user stats
       const res = await axios.get(`http://localhost:9000/user-stats?userId=${userId}`)
       if (res?.data?.success) {
         setData(res.data.result)
+      }
+
+      // 2. Fetch fresh profile status to check if blocked by admin
+      const profileRes = await axios.get(`http://localhost:9000/get-profile?userId=${userId}`)
+      if (profileRes?.data?.success && profileRes.data.result) {
+        const u = profileRes.data.result
+        const blocked = u.status === 'blocked' || u.status === false || u.status === 'false'
+        setIsBlocked(blocked)
+        if (blocked) {
+          Swal.fire({
+            title: 'Blocked by Admin',
+            html: `
+              <div style="text-align: left; padding: 6px 0;">
+                <p style="color: #b91c1c; font-weight: 700; font-size: 1rem; margin-bottom: 8px;">
+                  ⚠️ Your Freelancer Account Has Been Suspended
+                </p>
+                <p style="color: #475569; font-size: 0.92rem; line-height: 1.5; margin-bottom: 0;">
+                  Your account has been blocked by the admin. You are restricted from placing bids on projects. Please contact administrator support for assistance.
+                </p>
+              </div>
+            `,
+            icon: 'error',
+            confirmButtonText: 'I Understand',
+            confirmButtonColor: '#dc2626',
+            allowOutsideClick: false
+          })
+        }
       }
     } catch (err) {
       console.error('Error fetching user stats:', err)
@@ -28,10 +58,26 @@ const UserDashboard = () => {
 
   return (
     <div className="container py-5">
+      {/* Blocked by Admin Alert Banner */}
+      {isBlocked && (
+        <div className="alert alert-danger d-flex align-items-center justify-content-between p-3 rounded-4 shadow-sm mb-4 border-danger" data-aos="fade-down">
+          <div className="d-flex align-items-center gap-3">
+            <FaBan className="fs-2 text-danger flex-shrink-0" />
+            <div>
+              <h6 className="alert-heading fw-bold mb-1 text-danger">Account Blocked by Admin</h6>
+              <p className="small mb-0 text-dark">
+                Your freelancer account has been restricted by the administration. You cannot place bids on any client projects.
+              </p>
+            </div>
+          </div>
+          <span className="badge bg-danger text-white px-3 py-2 rounded-pill fw-bold">BLOCKED</span>
+        </div>
+      )}
+
       {/* Welcome Banner */}
       <div 
         className="p-4 p-md-5 mb-4 rounded-4 text-white shadow-sm position-relative overflow-hidden" 
-        style={{ background: 'linear-gradient(135deg, #0d6efd 0%, #198754 100%)' }}
+        style={{ background: isBlocked ? 'linear-gradient(135deg, #7f1d1d 0%, #b91c1c 100%)' : 'linear-gradient(135deg, #0d6efd 0%, #198754 100%)' }}
         data-aos="fade-down"
         data-aos-duration="800"
       >

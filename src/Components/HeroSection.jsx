@@ -30,7 +30,7 @@ const HeroSection = () => {
               </h3>
               <p className='herodes my-3' data-aos="fade-up" data-aos-delay="200">Connect. Collaborate. Earn. Post projects, discover global <br /> talent, compare competitive bids, and hire top freelancers <br /> with secure escrow payments on Zentora.</p>
               <div data-aos="fade-up" data-aos-delay="300">
-                <Link className='btn bg-color1 mb-5 text-light herobtn p-3 my-3' to={'/login'}>Browse Job and Projects < IoIosArrowRoundForward className='fs-5' /></Link>
+                <Link className='btn bg-color1 mb-5 text-light herobtn p-3 my-3' to={'/user-project'}>Browse Job and Projects < IoIosArrowRoundForward className='fs-5' /></Link>
               </div>
               <img src="/shape-13.png" alt="" className='herodot position-absolute' data-aos="zoom-in" data-aos-delay="400" />
             </div>

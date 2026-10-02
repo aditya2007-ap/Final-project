@@ -4,6 +4,7 @@ import { GiCheckMark } from "react-icons/gi";
 import { MdDoNotDisturb } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import { SiFreelancermap } from "react-icons/si";
+import Aos from 'aos';
 
 const Pricing = () => {
   const [data, setData] = useState([])
@@ -17,6 +18,9 @@ const Pricing = () => {
       const res = await axios.get('http://localhost:9000/admin-get-plans')
       console.log('Fetched plans data:', res)
       setData(res?.data?.result || [])
+      setTimeout(() => {
+        Aos.refreshHard()
+      }, 100)
     } catch (error) {
       console.error('Error fetching plans:', error)
     }
@@ -97,8 +101,31 @@ const Pricing = () => {
                 </div>
               ))
             ) : (
-              <div className="col-12 text-center py-5">
-                <p className="text-muted fs-5">No pricing plans currently available.</p>
+              <div className="col-12 text-center py-5" data-aos="fade-up">
+                <div className="p-5 bg-white rounded-4 shadow-sm border mx-auto" style={{ maxWidth: '600px' }}>
+                  <div
+                    className="d-inline-flex align-items-center justify-content-center rounded-circle bg-warning-subtle text-warning mb-3 shadow-sm"
+                    style={{ width: '84px', height: '84px' }}
+                  >
+                    <SiFreelancermap style={{ fontSize: '2.5rem' }} />
+                  </div>
+                  <h3 className="fw-bold text-dark mb-2">No Plans Existed Currently</h3>
+                  <p className="text-secondary mb-4" style={{ fontSize: '0.95rem', lineHeight: '1.6' }}>
+                    We are currently updating our freelancer bidding credit packages. No credit tiers are available at this moment. Please check back shortly!
+                  </p>
+                  <div className="d-flex align-items-center justify-content-center gap-3 flex-wrap">
+                    <button
+                      type="button"
+                      className="btn btn-outline-secondary px-4 py-2 rounded-pill fw-semibold"
+                      onClick={fetchData}
+                    >
+                      Refresh
+                    </button>
+                    <Link to="/" className="btn btn-primary px-4 py-2 rounded-pill fw-bold shadow-sm">
+                      Back to Home
+                    </Link>
+                  </div>
+                </div>
               </div>
             )}
           </div>

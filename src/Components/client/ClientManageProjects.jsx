@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { FaTrash, FaEye, FaPlus, FaBriefcase, FaClock, FaGavel, FaRupeeSign } from 'react-icons/fa'
+import { FaTrash, FaEye, FaPlus, FaBriefcase, FaClock, FaGavel, FaRupeeSign, FaTimesCircle, FaCheckCircle } from 'react-icons/fa'
 import { MdManageAccounts } from "react-icons/md";
 import axios from 'axios'
+import Swal from 'sweetalert2'
+
+const isRejected = (status) => status === 'rejected' || status === 'rejected by admin'
 
 const ClientManageProjects = () => {
   const navigate = useNavigate();
@@ -18,6 +21,39 @@ const ClientManageProjects = () => {
     const res = await axios.get(`http://localhost:9000/client-project-list?clientId=${clientId}`)
     console.log(res?.data?.result)
     setData(res?.data?.result || [])
+  }
+
+  const handleDeleteProject = async (id, title) => {
+    const confirm = await Swal.fire({
+      title: 'Delete Project?',
+      text: `Are you sure you want to delete "${title || 'this project'}"? All associated bids will also be removed.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#e65100',
+      cancelButtonColor: '#94a3b8',
+      confirmButtonText: 'Yes, delete',
+      cancelButtonText: 'Cancel'
+    })
+
+    if (confirm.isConfirmed) {
+      try {
+        const res = await axios.delete(`http://localhost:9000/client-delete-project/${id}`)
+        if (res?.data?.success) {
+          setData((prev) => prev.filter((p) => p._id !== id))
+          Swal.fire('Deleted!', res?.data?.message || 'Project has been deleted successfully.', 'success')
+          fetchData()
+        } else {
+          Swal.fire('Error', res?.data?.message || 'Failed to delete project.', 'error')
+        }
+      } catch (err) {
+        console.error('Error deleting project:', err)
+        Swal.fire(
+          'Error',
+          err?.response?.data?.message || 'Server error while deleting project. Please try again.',
+          'error'
+        )
+      }
+    }
   }
 
   return (
@@ -49,9 +85,19 @@ const ClientManageProjects = () => {
                 {/* Top Title & Budget Row */}
                 <div className="d-flex justify-content-between align-items-start mb-3 gap-2">
                   <div>
-                    <span className="badge bg-success-subtle text-success mb-2 px-3 py-1 rounded-pill fw-semibold small">
-                      <FaBriefcase className="me-1" /> Active Post
-                    </span>
+                    {isRejected(item?.status) ? (
+                      <span className="badge bg-danger text-white mb-2 px-3 py-1 rounded-pill fw-semibold small d-inline-flex align-items-center gap-1">
+                        <FaTimesCircle /> Rejected by Admin
+                      </span>
+                    ) : (item?.status === 'closed' || item?.status === true || item?.status === 'completed') ? (
+                      <span className="badge bg-secondary text-white mb-2 px-3 py-1 rounded-pill fw-semibold small d-inline-flex align-items-center gap-1 shadow-sm">
+                        <FaCheckCircle className="text-success" /> Closed / Awarded
+                      </span>
+                    ) : (
+                      <span className="badge bg-success-subtle text-success mb-2 px-3 py-1 rounded-pill fw-semibold small d-inline-flex align-items-center gap-1">
+                        <FaBriefcase /> Active Post (Open)
+                      </span>
+                    )}
                     <h4 className="fw-bold text-dark mb-1 client-project-title">{item?.title}</h4>
                   </div>
                   <div className="text-end flex-shrink-0">
@@ -76,17 +122,24 @@ const ClientManageProjects = () => {
 
                   {/* Actions */}
                   <div className="d-flex align-items-center gap-2">
+                    {isRejected(item?.status) ? (
+                      <span className="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-2 rounded-pill small fw-bold">
+                        Bidding Disabled
+                      </span>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          navigate('/client-Review-bids', { state: item })
+                        }}
+                        type="button"
+                        className="btn btn-sm btn-primary fw-bold px-3 py-2 rounded-pill d-inline-flex align-items-center gap-1"
+                      >
+                        <MdManageAccounts className="fs-5" /> Review Bids
+                      </button>
+                    )}
                     <button
-                      onClick={() => {
-                        navigate('/client-Review-bids', { state: item })
-                      }}
                       type="button"
-                      className="btn btn-sm btn-primary fw-bold px-3 py-2 rounded-pill d-inline-flex align-items-center gap-1"
-                    >
-                      <MdManageAccounts className="fs-5" /> Review Bids
-                    </button>
-                    <button
-                      type="button"
+                      onClick={() => handleDeleteProject(item?._id, item?.title)}
                       className="btn btn-sm btn-outline-danger fw-semibold px-3 py-2 rounded-pill d-inline-flex align-items-center gap-1"
                     >
                       <FaTrash /> Delete
