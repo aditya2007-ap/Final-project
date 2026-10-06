@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "auto-git": "node auto-git.js",
+    "push": "git add . && git commit -m \"Manual quick push\" && git push origin main"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.3",
