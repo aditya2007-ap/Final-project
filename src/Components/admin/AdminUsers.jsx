@@ -262,7 +262,17 @@ const AdminUsers = () => {
                       <tr key={item?._id}>
                         <td>
                           <div className="admin-user-cell">
-                            <div className="admin-avatar avatar-orange">{initials}</div>
+                            <div className="admin-avatar avatar-orange" style={{ overflow: 'hidden' }}>
+                              {item?.profile ? (
+                                <img
+                                  src={item.profile}
+                                  alt={item?.name || 'User'}
+                                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                />
+                              ) : (
+                                initials
+                              )}
+                            </div>
                             <div>
                               <div className="admin-name-title">{item?.name || 'Anonymous User'}</div>
                               <div className="admin-name-sub">Freelancer / Talent</div>

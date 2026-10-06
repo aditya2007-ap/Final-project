@@ -15,19 +15,19 @@ const CounterSection = () => {
           {/* Row 1 */}
           <div className="counter-grid">
             <div className="counter-item counter-item-1" data-aos="fade-up" data-aos-delay="100">
-              <span className="counter-number" style={{ color: '#1ab69d' }}><CountUp delay={0.5} start={0} end={32.4}/>k</span>
+              <span className="counter-number" style={{ color: '#1ab69d' }}><CountUp delay={0.5} start={0} end={32.4} enableScrollSpy scrollSpyOnce/>k</span>
               <span className="counter-label">FREELANCERS REGISTERED</span>
             </div>
             <div className="counter-item counter-item-2" data-aos="fade-up" data-aos-delay="200">
-              <span className="counter-number" style={{ color: '#f84f9a' }}><CountUp delay={0.5} start={0} end={8768}/></span>
+              <span className="counter-number" style={{ color: '#f84f9a' }}><CountUp delay={0.5} start={0} end={8768} enableScrollSpy scrollSpyOnce/></span>
               <span className="counter-label">PROJECTS COMPLETED</span>
             </div>
             <div className="counter-item counter-item-3" data-aos="fade-up" data-aos-delay="300">
-              <span className="counter-number" style={{ color: '#f8b81f' }}><CountUp delay={0.5} start={0} end={4567}/></span>
+              <span className="counter-number" style={{ color: '#f8b81f' }}><CountUp delay={0.5} start={0} end={4567} enableScrollSpy scrollSpyOnce/></span>
               <span className="counter-label">TOP FREELANCERS</span>
             </div>
             <div className="counter-item counter-item-4" data-aos="fade-up" data-aos-delay="400">
-              <span className="counter-number" style={{ color: '#6a1b9a' }}><CountUp delay={0.5} start={0} end={99.9}/>%</span>
+              <span className="counter-number" style={{ color: '#6a1b9a' }}><CountUp delay={0.5} start={0} end={99.9} enableScrollSpy scrollSpyOnce/>%</span>
               <span className="counter-label">SATISFACTION RATE</span>
             </div>
           </div>

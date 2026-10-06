@@ -4,6 +4,35 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 /* ─── helper: always returns the correct active class ─── */
 const navCls = ({ isActive }) => `nav-link${isActive ? ' active' : ''}`
 
+/* ─── NavAvatar: small circular profile picture in the navbar ─── */
+const NavAvatar = ({ data }) => {
+  if (!data) return null
+  const profilePic = data.profile
+  const name = data.name || data.email || 'U'
+  const initial = name[0].toUpperCase()
+  const colors = { admin: '#e65100', client: '#6a1b9a', user: '#0ea5e9' }
+  const bg = colors[data.type] || '#64748b'
+
+  return (
+    <div
+      style={{
+        width: 32, height: 32, borderRadius: '50%',
+        background: profilePic ? 'transparent' : bg,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        color: '#fff', fontWeight: 700, fontSize: '0.82rem',
+        overflow: 'hidden', border: `2px solid ${bg}`,
+        flexShrink: 0, boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
+      }}
+    >
+      {profilePic ? (
+        <img src={profilePic} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+      ) : (
+        initial
+      )}
+    </div>
+  )
+}
+
 const Navbar = () => {
   const [data, setData] = useState(null);
   const location = useLocation();

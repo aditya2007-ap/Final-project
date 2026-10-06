@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { FaUser, FaEnvelope, FaCode, FaRupeeSign, FaMapMarkerAlt, FaSave, FaCheckCircle, FaBolt, FaStar, FaEdit, FaTimes, FaCalendarAlt, FaShieldAlt, FaUserTie, FaGavel, FaCoins, FaArrowRight, FaBriefcase, FaArrowLeft, FaBan } from 'react-icons/fa'
+import { FaUser, FaEnvelope, FaCode, FaRupeeSign, FaMapMarkerAlt, FaSave, FaCheckCircle, FaBolt, FaStar, FaEdit, FaTimes, FaCalendarAlt, FaShieldAlt, FaUserTie, FaGavel, FaCoins, FaArrowRight, FaBriefcase, FaArrowLeft, FaBan, FaCamera, FaTrashAlt } from 'react-icons/fa'
 import { Link, useLocation, useNavigate, useSearchParams, useParams } from 'react-router-dom'
 import axios from 'axios'
 import Swal from 'sweetalert2'
@@ -20,6 +20,7 @@ const UserProfile = () => {
   const [stats, setStats] = useState(null)
   const [activeTab, setActiveTab] = useState('overview')
   const [isBlocked, setIsBlocked] = useState(false)
+  const [avatarPreview, setAvatarPreview] = useState(null)
 
   const [loggedInInfo] = useState(() => {
     try { return JSON.parse(localStorage.getItem('info')) } catch { return null }
@@ -69,6 +70,7 @@ const UserProfile = () => {
       if (res?.data?.success && res.data.result) {
         const user = res.data.result
         setProfileData(user)
+        if (user.profile) setAvatarPreview(user.profile)
         const blocked = user.status === 'blocked' || user.status === false || user.status === 'false'
         setIsBlocked(blocked)
         if (blocked) {
@@ -181,17 +183,35 @@ const UserProfile = () => {
     })
   }
 
+  const handlePhotoUpload = (e) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setAvatarPreview(reader.result)
+        Swal.fire({ title: 'Photo Selected', text: 'Click "Save Changes" to apply your new profile photo.', icon: 'success', timer: 1800, showConfirmButton: false })
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const handleRemovePhoto = () => {
+    setAvatarPreview(null)
+    Swal.fire({ title: 'Photo Removed', text: 'Default avatar restored. Click "Save Changes" to persist.', icon: 'info', timer: 1500, showConfirmButton: false })
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setSaving(true)
     try {
       const info = JSON.parse(localStorage.getItem('info'))
       const res = await axios.put('http://localhost:9000/update-profile', {
-        userId: info._id, ...formData
+        userId: info._id, ...formData, profile: avatarPreview || ''
       })
       if (res?.data?.success) {
         const updated = res.data.result
         localStorage.setItem('info', JSON.stringify({ ...info, ...updated }))
+        window.dispatchEvent(new Event('storage'))
         setProfileData(updated)
         setIsEditing(false)
         Swal.fire({ icon: 'success', title: 'Profile Updated!', text: 'Your profile has been saved successfully', timer: 2000, showConfirmButton: false })
@@ -447,6 +467,29 @@ const UserProfile = () => {
           object-fit: cover;
           border: 3px solid #0f172a;
         }
+        .user-avatar-upload-overlay {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          width: 34px;
+          height: 34px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #0ea5e9, #6366f1);
+          color: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          border: 3px solid #0f172a;
+          font-size: 14px;
+          z-index: 5;
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .user-avatar-upload-overlay:hover {
+          transform: scale(1.15);
+          box-shadow: 0 4px 14px rgba(14,165,233,0.5);
+        }
         .verified-badge {
           position: absolute;
           bottom: 4px;
@@ -617,11 +660,19 @@ const UserProfile = () => {
             {/* Avatar */}
             <div className="position-relative" data-aos="zoom-in" data-aos-delay="200">
               <div className="profile-avatar-ring">
-                <img src={getAvatarUrl(formData.name)} alt={formData.name} />
+                <img src={avatarPreview || getAvatarUrl(formData.name)} alt={formData.name} />
               </div>
               <div className="verified-badge">
                 <FaCheckCircle />
               </div>
+              {isOwner && (
+                <>
+                  <label htmlFor="user-avatar-upload" className="user-avatar-upload-overlay" title="Change Profile Photo">
+                    <FaCamera />
+                  </label>
+                  <input type="file" id="user-avatar-upload" accept="image/*" className="d-none" onChange={handlePhotoUpload} />
+                </>
+              )}
             </div>
 
             {/* Info */}
@@ -1000,6 +1051,30 @@ const UserProfile = () => {
                 <FaEdit style={{ color: '#0ea5e9' }} /> Edit Your Profile
               </h5>
               <p className="text-muted small mb-4">Update your professional information below.</p>
+
+              {/* Profile Photo Upload Section */}
+              <div className="d-flex align-items-center gap-4 p-4 rounded-4 border mb-4" style={{ background: '#f8fafc' }}>
+                <div className="position-relative">
+                  <div style={{ width: 80, height: 80, borderRadius: '50%', padding: 3, background: 'linear-gradient(135deg, #0ea5e9, #6366f1, #ec4899)' }}>
+                    <img src={avatarPreview || getAvatarUrl(formData.name)} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', border: '2px solid white' }} />
+                  </div>
+                </div>
+                <div>
+                  <h6 className="fw-bold mb-1" style={{ fontSize: '0.9rem' }}>Profile Photo</h6>
+                  <p className="text-muted mb-2" style={{ fontSize: '0.78rem' }}>JPG, PNG or GIF. Max 2MB recommended.</p>
+                  <div className="d-flex gap-2">
+                    <label htmlFor="user-avatar-edit-upload" className="btn btn-sm d-inline-flex align-items-center gap-1 fw-semibold text-white" style={{ background: 'linear-gradient(135deg, #0ea5e9, #6366f1)', border: 'none', borderRadius: 10, cursor: 'pointer', fontSize: '0.82rem', padding: '6px 16px' }}>
+                      <FaCamera size={12} /> Upload Photo
+                    </label>
+                    <input type="file" id="user-avatar-edit-upload" accept="image/*" className="d-none" onChange={handlePhotoUpload} />
+                    {avatarPreview && (
+                      <button type="button" className="btn btn-sm btn-outline-danger d-inline-flex align-items-center gap-1 fw-semibold" style={{ borderRadius: 10, fontSize: '0.82rem', padding: '6px 16px' }} onClick={handleRemovePhoto}>
+                        <FaTrashAlt size={11} /> Remove
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
 
               <form onSubmit={handleSubmit}>
                 <div className="row g-4">

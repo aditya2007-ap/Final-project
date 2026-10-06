@@ -168,6 +168,7 @@ const AdminProfile = () => {
         const updated = res.data.result;
         const newInfo = { ...loggedInInfo, ...updated };
         localStorage.setItem('info', JSON.stringify(newInfo));
+        window.dispatchEvent(new Event('storage'));
 
         // Reset password fields
         setPasswords({ currentPassword: '', newPassword: '', confirmPassword: '' });

@@ -207,12 +207,25 @@ const AdminProjects = ({ isEmbedded = false }) => {
                     </div>
                   </td>
                   <td>
-                    <span
-                      className="px-2 py-1 rounded bg-light border text-muted font-monospace small"
-                      title={item?.clientId}
-                    >
-                      {item?.clientId ? `${item.clientId.substring(0, 10)}...` : 'Platform'}
-                    </span>
+                    <div className="d-flex align-items-center gap-2">
+                      <div
+                        className="admin-avatar avatar-purple flex-shrink-0"
+                        style={{ width: 28, height: 28, fontSize: '0.72rem', overflow: 'hidden' }}
+                      >
+                        {item?.clientProfile ? (
+                          <img
+                            src={item.clientProfile}
+                            alt={item?.clientName || 'Client'}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          />
+                        ) : (
+                          (item?.clientName || 'C')[0].toUpperCase()
+                        )}
+                      </div>
+                      <span className="small fw-semibold text-dark text-truncate" style={{ maxWidth: '130px' }} title={item?.clientName}>
+                        {item?.clientName || 'Platform'}
+                      </span>
+                    </div>
                   </td>
                   <td>
                     <span className="admin-credit-badge">

@@ -42,8 +42,16 @@ const BidderRow = ({ item, rank, onAction, actionLoading }) => {
 
       {/* avatar + name */}
       <div className="abg-bidder-identity">
-        <div className={`abg-avatar ${isAccepted(item.status) ? 'abg-avatar-accepted' : ''}`}>
-          {(item.freelancerName || 'F')[0].toUpperCase()}
+        <div className={`abg-avatar ${isAccepted(item.status) ? 'abg-avatar-accepted' : ''}`} style={{ overflow: 'hidden' }}>
+          {item.freelancerProfile ? (
+            <img
+              src={item.freelancerProfile}
+              alt={item.freelancerName || 'Freelancer'}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+          ) : (
+            (item.freelancerName || 'F')[0].toUpperCase()
+          )}
         </div>
         <div>
           <div className="abg-freelancer-name">{item.freelancerName || 'Unknown'}</div>
@@ -129,8 +137,15 @@ const ProjectGroup = ({ projectTitle, clientName, bids, onAction, actionLoading,
           </div>
           <div>
             <div className="abg-project-title">{projectTitle}</div>
-            <div className="abg-project-client">
-              Client: <strong>{clientName || 'N/A'}</strong>
+            <div className="abg-project-client d-flex align-items-center gap-1">
+              {bids?.[0]?.clientProfile && (
+                <img
+                  src={bids[0].clientProfile}
+                  alt={clientName || 'Client'}
+                  style={{ width: 18, height: 18, borderRadius: '50%', objectFit: 'cover' }}
+                />
+              )}
+              <span>Client: <strong>{clientName || 'N/A'}</strong></span>
             </div>
           </div>
         </div>

@@ -16,6 +16,10 @@ const UserProjects = () => {
   const [message, setMessage] = useState('')
   const [filterTab, setFilterTab] = useState('all') // 'all', 'open', 'closed'
   const [searchTerm, setSearchTerm] = useState('')
+  const [activeBidProject, setActiveBidProject] = useState(null)
+  const [userInfo, setUserInfo] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('info')) || null } catch { return null }
+  })
 
   const isProjectClosed = (item) => item?.status === 'closed' || item?.status === true || item?.status === 'completed';
 
@@ -51,7 +55,9 @@ const UserProjects = () => {
             const freshCredits = parseInt(u.credit) || 0;
             setUserCredits(freshCredits);
             try {
-              localStorage.setItem('info', JSON.stringify({ ...info, credit: freshCredits }));
+              const merged = { ...info, ...u, credit: freshCredits };
+              localStorage.setItem('info', JSON.stringify(merged));
+              setUserInfo(merged);
             } catch (err) {
               console.error(err);
             }
@@ -73,9 +79,14 @@ const UserProjects = () => {
     }
   }
 
-  const handleStartBid = (targetProjectId) => {
-    const targetProject = data.find((p) => p._id === targetProjectId);
-    if (targetProject && isProjectClosed(targetProject)) {
+  const handleStartBid = (targetProjectOrId) => {
+    const targetProject = typeof targetProjectOrId === 'object' && targetProjectOrId !== null
+      ? targetProjectOrId
+      : data.find((p) => p._id === targetProjectOrId);
+
+    if (!targetProject) return;
+
+    if (isProjectClosed(targetProject)) {
       Swal.fire({
         title: 'Project Closed',
         text: 'This project has already been awarded to a freelancer and is closed for new bids.',
@@ -118,8 +129,9 @@ const UserProjects = () => {
       return;
     }
 
-    setProjectId(targetProjectId);
-    setAmount('');
+    setActiveBidProject(targetProject);
+    setProjectId(targetProject._id);
+    setAmount(targetProject.budget ? String(targetProject.budget) : '');
     setMessage('');
   }
 
@@ -190,6 +202,7 @@ const UserProjects = () => {
           icon: 'success'
         });
         setUserCredits(prev => Math.max(0, prev - 1));
+        setActiveBidProject(null);
         setProjectId('');
         setAmount('');
         setMessage('');
@@ -392,6 +405,38 @@ const UserProjects = () => {
                         ) : null}
                       </div>
                       <h4 className="fw-bold text-dark mb-1 project-title">{item.title}</h4>
+                      {/* Client Info with Avatar */}
+                      <div className="d-flex align-items-center gap-2 mt-2">
+                        <div
+                          style={{
+                            width: 24,
+                            height: 24,
+                            borderRadius: '50%',
+                            overflow: 'hidden',
+                            background: '#e0e7ff',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: '0.68rem',
+                            fontWeight: 700,
+                            color: '#4338ca',
+                            flexShrink: 0
+                          }}
+                        >
+                          {item.clientProfile ? (
+                            <img
+                              src={item.clientProfile}
+                              alt={item.clientName || 'Client'}
+                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                          ) : (
+                            (item.clientName || 'C')[0].toUpperCase()
+                          )}
+                        </div>
+                        <span className="small text-muted fw-semibold text-truncate" style={{ fontSize: '0.78rem' }}>
+                          Client: {item.clientName || 'Hiring Employer'}
+                        </span>
+                      </div>
                     </div>
                     <div className="text-end flex-shrink-0">
                       <span className="fs-4 fw-bold text-success d-block">₹{item.budget}</span>
@@ -399,125 +444,11 @@ const UserProjects = () => {
                     </div>
                   </div>
 
-                  <p className="text-secondary small mb-4 project-desc flex-grow-1">
+                  <p className="text-secondary small mb-4 project-desc flex-grow-1" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                     {item.description || item.desc || 'No detailed description provided by the client.'}
                   </p>
 
-                  {projectId === item?._id && !isAlreadySubmitted && !isUserBlocked ? (
-                  <div className="user-bid-form-card mt-2">
-                    <div className="d-flex justify-content-between align-items-center mb-3">
-                      <div>
-                        <span className="fw-bold text-dark d-flex align-items-center gap-2">
-                          <FaPaperPlane className="text-primary" /> Submit Your Proposal &amp; Bid
-                        </span>
-                        <div className="text-muted" style={{ fontSize: '0.75rem' }}>
-                          Tailor your pitch directly to the client
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        className="btn-close btn-close-sm"
-                        onClick={() => { setProjectId(''); setAmount(''); setMessage(''); }}
-                        aria-label="Close"
-                      />
-                    </div>
-
-                    {/* Proposed Budget */}
-                    <div className="mb-3">
-                      <label className="form-label small text-secondary mb-1 fw-semibold d-flex justify-content-between">
-                        <span>Your Proposed Budget *</span>
-                        <span className="text-muted fw-normal" style={{ fontSize: '0.75rem' }}>Client Budget: ₹{item.budget}</span>
-                      </label>
-                      <div className="bid-input-container">
-                        <span className="bid-currency-symbol">₹</span>
-                        <input
-                          onChange={(e) => setAmount(e.target.value)}
-                          value={amount}
-                          type="number"
-                          className="form-control form-control-sm rounded-3 bg-white bid-amount-field"
-                          placeholder="e.g. 20000"
-                          autoFocus
-                        />
-                      </div>
-                    </div>
-
-                    {/* Proposal Message Section */}
-                    <div className="mb-3">
-                      <div className="d-flex justify-content-between align-items-center mb-1">
-                        <label className="form-label small text-secondary mb-0 fw-semibold d-flex align-items-center gap-1">
-                          <FaRegCommentDots className="text-primary" /> Proposal Message / Cover Pitch
-                        </label>
-                        <span className="bid-privacy-badge">
-                          <FaShieldAlt style={{ fontSize: '0.65rem' }} /> Client Only
-                        </span>
-                      </div>
-
-                      <textarea
-                        rows="3"
-                        className="form-control form-control-sm rounded-3 bid-textarea-field"
-                        placeholder="Explain why you are the best fit, your strategy, estimated delivery timeline, or questions for the employer..."
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                      />
-
-                      {/* Quick Pitch Starter Chips */}
-                      <div className="bid-quick-chips-wrapper">
-                        <span className="text-muted" style={{ fontSize: '0.72rem', alignSelf: 'center', marginRight: '2px' }}>
-                          ⚡ Quick add:
-                        </span>
-                        <button
-                          type="button"
-                          className="bid-quick-chip"
-                          onClick={() => setMessage(prev => prev ? `${prev} I have hands-on experience delivering similar projects with clean architecture.` : 'I have hands-on experience delivering similar projects with clean architecture.')}
-                        >
-                          💼 Relevant Experience
-                        </button>
-                        <button
-                          type="button"
-                          className="bid-quick-chip"
-                          onClick={() => setMessage(prev => prev ? `${prev} I can guarantee fast turnaround and regular milestone updates.` : 'I can guarantee fast turnaround and regular milestone updates.')}
-                        >
-                          ⚡ Fast Delivery
-                        </button>
-                        <button
-                          type="button"
-                          className="bid-quick-chip"
-                          onClick={() => setMessage(prev => prev ? `${prev} I provide complete post-launch support and free revisions.` : 'I provide complete post-launch support and free revisions.')}
-                        >
-                          🤝 Full Support
-                        </button>
-                      </div>
-
-                      <div className="d-flex justify-content-between align-items-center mt-2">
-                        <small className="text-muted" style={{ fontSize: '0.72rem' }}>
-                          🔒 Kept private between you and this client.
-                        </small>
-                        <small className="text-muted fw-semibold" style={{ fontSize: '0.72rem' }}>
-                          {message.length} character{message.length !== 1 ? 's' : ''}
-                        </small>
-                      </div>
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="d-flex align-items-center justify-content-end gap-2 pt-2 border-top">
-                      <button
-                        type="button"
-                        className="btn btn-sm btn-light border px-3 rounded-pill text-secondary"
-                        onClick={() => { setProjectId(''); setAmount(''); setMessage(''); }}
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        onClick={handlePostBid}
-                        type="button"
-                        className="btn btn-sm btn-primary fw-bold px-4 rounded-pill d-inline-flex align-items-center gap-2 shadow-sm"
-                      >
-                        <FaPaperPlane /> Submit Bid &amp; Message
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="d-flex flex-wrap align-items-center justify-content-between pt-3 border-top gap-3">
+                  <div className="d-flex flex-wrap align-items-center justify-content-between pt-3 border-top gap-3 mt-auto">
                     <div className="d-flex align-items-center gap-3 text-muted small">
                       <span className="d-flex align-items-center gap-1">
                         <FaClock className="text-primary" /> {item.timeline || item.duration || item.time || 'Flexible'}
@@ -528,78 +459,302 @@ const UserProjects = () => {
                       </span>
                     </div>
 
-                      {isClosed ? (
-                        isMyBidAccepted ? (
-                          <button
-                            type="button"
-                            className="btn btn-sm btn-success fw-bold px-4 py-2 rounded-pill d-inline-flex align-items-center gap-2 shadow-sm"
-                            onClick={() => navigate('/user-bids')}
-                          >
-                            <FaCheckCircle /> View Accepted Contract
-                          </button>
-                        ) : isAlreadySubmitted ? (
-                          <span className="badge bg-light text-muted border px-3 py-2 rounded-pill small fw-medium d-inline-flex align-items-center gap-1">
-                            <FaLock size={11} className="text-muted" /> Contract Awarded (Closed)
-                          </span>
-                        ) : (
-                          <button
-                            type="button"
-                            className="btn btn-sm btn-secondary fw-semibold px-4 py-2 rounded-pill d-inline-flex align-items-center gap-2"
-                            disabled
-                            style={{ cursor: 'not-allowed', opacity: 0.75 }}
-                            title="This project has been awarded and is closed for new bids"
-                          >
-                            <FaLock size={11} /> Project Closed
-                          </button>
-                        )
-                      ) : isAlreadySubmitted ? (
-                        <div className="d-flex align-items-center gap-2">
-                          <button
-                            type="button"
-                            className="btn btn-sm btn-light border border-success-subtle text-success fw-bold px-3 py-2 rounded-pill d-inline-flex align-items-center gap-2 shadow-sm"
-                            disabled
-                            style={{ cursor: 'not-allowed', background: '#f0fdf4' }}
-                          >
-                            <FaCheckCircle className="text-success" /> Already Submitted
-                          </button>
-                        </div>
-                      ) : isUserBlocked ? (
+                    {isClosed ? (
+                      isMyBidAccepted ? (
                         <button
                           type="button"
-                          className="btn btn-sm btn-outline-danger fw-semibold px-4 py-2 rounded-pill d-inline-flex align-items-center gap-2 shadow-sm"
-                          onClick={() => {
-                            Swal.fire({
-                              title: 'Account Blocked by Admin',
-                              text: 'Your account has been blocked by the admin. You cannot place bids on any projects.',
-                              icon: 'error',
-                              confirmButtonColor: '#dc2626'
-                            });
-                          }}
+                          className="btn btn-sm btn-success fw-bold px-4 py-2 rounded-pill d-inline-flex align-items-center gap-2 shadow-sm"
+                          onClick={() => navigate('/user-bids')}
                         >
-                          <FaBan /> Blocked by Admin
+                          <FaCheckCircle /> View Accepted Contract
                         </button>
+                      ) : isAlreadySubmitted ? (
+                        <span className="badge bg-light text-muted border px-3 py-2 rounded-pill small fw-medium d-inline-flex align-items-center gap-1">
+                          <FaLock size={11} className="text-muted" /> Contract Awarded (Closed)
+                        </span>
                       ) : (
                         <button
-                          onClick={() => handleStartBid(item?._id)}
                           type="button"
-                          className={`btn btn-sm ${userCredits > 0 ? 'btn-primary' : 'btn-outline-primary'} fw-bold px-4 py-2 rounded-pill d-inline-flex align-items-center gap-2`}
-                          title={userCredits <= 0 ? 'Bidding credits required. Click to view plans.' : 'Submit a bid on this project'}
+                          className="btn btn-sm btn-secondary fw-semibold px-4 py-2 rounded-pill d-inline-flex align-items-center gap-2"
+                          disabled
+                          style={{ cursor: 'not-allowed', opacity: 0.75 }}
+                          title="This project has been awarded and is closed for new bids"
                         >
-                          {userCredits <= 0 ? (
-                            <><FaLock /> Place Bid (Plan Required)</>
-                          ) : (
-                            <><FaGavel /> Place Bid</>
-                          )}
+                          <FaLock size={11} /> Project Closed
                         </button>
-                      )}
-                    </div>
-                  )}
+                      )
+                    ) : isAlreadySubmitted ? (
+                      <div className="d-flex align-items-center gap-2">
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-light border border-success-subtle text-success fw-bold px-3 py-2 rounded-pill d-inline-flex align-items-center gap-2 shadow-sm"
+                          disabled
+                          style={{ cursor: 'not-allowed', background: '#f0fdf4' }}
+                        >
+                          <FaCheckCircle className="text-success" /> Already Submitted
+                        </button>
+                      </div>
+                    ) : isUserBlocked ? (
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-outline-danger fw-semibold px-4 py-2 rounded-pill d-inline-flex align-items-center gap-2 shadow-sm"
+                        onClick={() => {
+                          Swal.fire({
+                            title: 'Account Blocked by Admin',
+                            text: 'Your account has been blocked by the admin. You cannot place bids on any projects.',
+                            icon: 'error',
+                            confirmButtonColor: '#dc2626'
+                          });
+                        }}
+                      >
+                        <FaBan /> Blocked by Admin
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleStartBid(item)}
+                        type="button"
+                        className={`btn btn-sm ${userCredits > 0 ? 'btn-primary' : 'btn-outline-primary'} fw-bold px-4 py-2 rounded-pill d-inline-flex align-items-center gap-2 shadow-sm`}
+                        title={userCredits <= 0 ? 'Bidding credits required. Click to view plans.' : 'Submit a proposal bid on this project'}
+                      >
+                        {userCredits <= 0 ? (
+                          <><FaLock /> Place Bid (Plan Required)</>
+                        ) : (
+                          <><FaGavel /> Place Bid</>
+                        )}
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             );
           });
         })()}
       </div>
+
+      {/* ── Bidding Pop-up Modal Window ── */}
+      {activeBidProject && (
+        <div
+          className="bid-modal-backdrop"
+          onClick={() => { setActiveBidProject(null); setProjectId(''); setAmount(''); setMessage(''); }}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="bid-modal-dialog"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="bid-modal-header d-flex align-items-center justify-content-between p-4 border-bottom">
+              <div>
+                <span className="badge bg-primary-subtle text-primary rounded-pill mb-1 fw-bold" style={{ fontSize: '0.72rem' }}>
+                  ⚡ Proposal Submission
+                </span>
+                <h5 className="modal-title fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+                  <FaPaperPlane className="text-primary" /> {activeBidProject.title}
+                </h5>
+              </div>
+              <button
+                type="button"
+                className="btn-close"
+                onClick={() => { setActiveBidProject(null); setProjectId(''); setAmount(''); setMessage(''); }}
+                aria-label="Close"
+              />
+            </div>
+
+            {/* Modal Body */}
+            <div className="bid-modal-body p-4" style={{ maxHeight: 'calc(85vh - 140px)', overflowY: 'auto' }}>
+              {/* Project & Client Summary Card */}
+              <div className="p-3 rounded-4 mb-3" style={{ background: '#f8fafc', border: '1px solid #e2e8f0' }}>
+                <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+                  <div className="d-flex align-items-center gap-2">
+                    <div
+                      style={{
+                        width: 32,
+                        height: 32,
+                        borderRadius: '50%',
+                        overflow: 'hidden',
+                        background: '#e0e7ff',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '0.75rem',
+                        fontWeight: 700,
+                        color: '#4338ca',
+                        flexShrink: 0
+                      }}
+                    >
+                      {activeBidProject.clientProfile ? (
+                        <img
+                          src={activeBidProject.clientProfile}
+                          alt={activeBidProject.clientName || 'Client'}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
+                      ) : (
+                        (activeBidProject.clientName || 'C')[0].toUpperCase()
+                      )}
+                    </div>
+                    <div>
+                      <span className="fw-bold text-dark small d-block">{activeBidProject.clientName || 'Client'}</span>
+                      <span className="text-muted" style={{ fontSize: '0.72rem' }}>Hiring Employer</span>
+                    </div>
+                  </div>
+                  <div className="text-end">
+                    <span className="fs-5 fw-bold text-success">₹{activeBidProject.budget}</span>
+                    <span className="text-muted d-block" style={{ fontSize: '0.72rem' }}>Client Budget</span>
+                  </div>
+                </div>
+                <p className="text-secondary small mb-0" style={{ fontSize: '0.82rem', lineHeight: 1.5 }}>
+                  {activeBidProject.description || activeBidProject.desc || 'No detailed description provided.'}
+                </p>
+              </div>
+
+              {/* Bidding Freelancer Identity Card (with DP) */}
+              <div className="d-flex align-items-center gap-3 p-3 rounded-4 mb-3" style={{ background: 'linear-gradient(135deg, rgba(14,165,233,0.06), rgba(99,102,241,0.08))', border: '1px solid rgba(99,102,241,0.2)' }}>
+                <div
+                  style={{
+                    width: 44,
+                    height: 44,
+                    borderRadius: '50%',
+                    overflow: 'hidden',
+                    flexShrink: 0,
+                    background: 'linear-gradient(135deg, #0ea5e9, #6366f1)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#fff',
+                    fontWeight: 'bold',
+                    fontSize: '1rem',
+                    border: '2px solid #6366f1',
+                    boxShadow: '0 2px 8px rgba(99,102,241,0.2)'
+                  }}
+                >
+                  {userInfo?.profile ? (
+                    <img
+                      src={userInfo.profile}
+                      alt={userInfo?.name || 'Freelancer'}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  ) : (
+                    (userInfo?.name || 'U')[0].toUpperCase()
+                  )}
+                </div>
+                <div className="flex-grow-1 min-w-0">
+                  <div className="d-flex align-items-center gap-2">
+                    <span className="fw-bold text-dark">{userInfo?.name || 'Freelancer'}</span>
+                    <span className="badge bg-success-subtle text-success border border-success-subtle rounded-pill" style={{ fontSize: '0.68rem' }}>
+                      ● Verified Talent
+                    </span>
+                  </div>
+                  <div className="text-muted" style={{ fontSize: '0.76rem' }}>
+                    Your profile picture, portfolio &amp; ratings will be attached to this bid proposal
+                  </div>
+                </div>
+              </div>
+
+              {/* Proposed Budget */}
+              <div className="mb-3">
+                <label className="form-label small text-secondary mb-1 fw-semibold d-flex justify-content-between">
+                  <span>Your Proposed Budget (INR) *</span>
+                  <span className="text-muted fw-normal" style={{ fontSize: '0.75rem' }}>
+                    Client expects around: ₹{activeBidProject.budget}
+                  </span>
+                </label>
+                <div className="bid-input-container">
+                  <span className="bid-currency-symbol">₹</span>
+                  <input
+                    onChange={(e) => setAmount(e.target.value)}
+                    value={amount}
+                    type="number"
+                    className="form-control rounded-3 bg-white bid-amount-field"
+                    placeholder="e.g. 20000"
+                    autoFocus
+                  />
+                </div>
+              </div>
+
+              {/* Proposal Message Section */}
+              <div className="mb-3">
+                <div className="d-flex justify-content-between align-items-center mb-1">
+                  <label className="form-label small text-secondary mb-0 fw-semibold d-flex align-items-center gap-1">
+                    <FaRegCommentDots className="text-primary" /> Proposal Message / Cover Pitch
+                  </label>
+                  <span className="bid-privacy-badge">
+                    <FaShieldAlt style={{ fontSize: '0.65rem' }} /> Client Only
+                  </span>
+                </div>
+
+                <textarea
+                  rows="4"
+                  className="form-control rounded-3 bid-textarea-field"
+                  placeholder="Explain why you are the best fit, your approach, tech stack, and estimated delivery milestones..."
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                />
+
+                {/* Quick Pitch Starter Chips */}
+                <div className="bid-quick-chips-wrapper mt-2">
+                  <span className="text-muted" style={{ fontSize: '0.72rem', alignSelf: 'center', marginRight: '2px' }}>
+                    ⚡ Quick add:
+                  </span>
+                  <button
+                    type="button"
+                    className="bid-quick-chip"
+                    onClick={() => setMessage(prev => prev ? `${prev} I have hands-on experience delivering similar projects with clean architecture.` : 'I have hands-on experience delivering similar projects with clean architecture.')}
+                  >
+                    💼 Relevant Experience
+                  </button>
+                  <button
+                    type="button"
+                    className="bid-quick-chip"
+                    onClick={() => setMessage(prev => prev ? `${prev} I can guarantee fast turnaround and regular milestone updates.` : 'I can guarantee fast turnaround and regular milestone updates.')}
+                  >
+                    ⚡ Fast Delivery
+                  </button>
+                  <button
+                    type="button"
+                    className="bid-quick-chip"
+                    onClick={() => setMessage(prev => prev ? `${prev} I provide complete post-launch support and free revisions.` : 'I provide complete post-launch support and free revisions.')}
+                  >
+                    🤝 Full Support
+                  </button>
+                </div>
+
+                <div className="d-flex justify-content-between align-items-center mt-2">
+                  <small className="text-muted" style={{ fontSize: '0.72rem' }}>
+                    🔒 Kept private between you and this hiring client.
+                  </small>
+                  <small className="text-muted fw-semibold" style={{ fontSize: '0.72rem' }}>
+                    {message.length} character{message.length !== 1 ? 's' : ''}
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="bid-modal-footer d-flex align-items-center justify-content-between p-3 px-4 border-top bg-light rounded-bottom-4">
+              <div className="small text-muted d-flex align-items-center gap-1">
+                <FaCoins className="text-warning" /> 1 bidding credit used per proposal
+              </div>
+              <div className="d-flex align-items-center gap-2">
+                <button
+                  type="button"
+                  className="btn btn-light border px-4 rounded-pill text-secondary fw-semibold"
+                  onClick={() => { setActiveBidProject(null); setProjectId(''); setAmount(''); setMessage(''); }}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handlePostBid}
+                  type="button"
+                  className="btn btn-primary fw-bold px-4 rounded-pill d-inline-flex align-items-center gap-2 shadow-sm"
+                >
+                  <FaPaperPlane /> Submit Bid &amp; Proposal
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

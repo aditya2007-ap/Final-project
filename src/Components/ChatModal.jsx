@@ -13,10 +13,12 @@ const ChatModal = ({
   bidId = '',
   partnerName = 'Collaborator',
   partnerRole = 'Freelancer',
+  partnerProfile = '',
   receiverId = '',
   currentUserId,
   currentUserName = 'You',
-  currentUserRole = 'user'
+  currentUserRole = 'user',
+  currentUserProfile = ''
 }) => {
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
@@ -109,8 +111,12 @@ const ChatModal = ({
         <div className="chat-modal-header d-flex align-items-center justify-content-between">
           <div className="d-flex align-items-center gap-3">
             <div className="position-relative">
-              <div className={`avatar-circle ${currentUserRole === 'client' ? 'avatar-freelancer' : 'avatar-client'}`}>
-                {(partnerName || 'U')[0].toUpperCase()}
+              <div className={`avatar-circle ${currentUserRole === 'client' ? 'avatar-freelancer' : 'avatar-client'}`} style={{ overflow: 'hidden' }}>
+                {partnerProfile ? (
+                  <img src={partnerProfile} alt={partnerName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                ) : (
+                  (partnerName || 'U')[0].toUpperCase()
+                )}
               </div>
               <span className="status-dot-active" title="Active on Zentora" />
             </div>
@@ -244,10 +250,15 @@ const ChatModal = ({
                           width: '28px',
                           height: '28px',
                           fontSize: '0.72rem',
-                          background: 'linear-gradient(135deg, #6366f1, #4f46e5)'
+                          background: 'linear-gradient(135deg, #6366f1, #4f46e5)',
+                          overflow: 'hidden'
                         }}
                       >
-                        {(msg.senderName || partnerName || 'U')[0].toUpperCase()}
+                        {partnerProfile ? (
+                          <img src={partnerProfile} alt={partnerName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        ) : (
+                          (msg.senderName || partnerName || 'U')[0].toUpperCase()
+                        )}
                       </div>
                     )}
 
@@ -267,6 +278,20 @@ const ChatModal = ({
                         </div>
                       </div>
                     </div>
+
+                    {isMine && currentUserProfile && (
+                      <div
+                        className="rounded-circle d-flex align-items-center justify-content-center shadow-sm flex-shrink-0"
+                        style={{
+                          width: '28px',
+                          height: '28px',
+                          overflow: 'hidden',
+                          border: '1.5px solid #6366f1'
+                        }}
+                      >
+                        <img src={currentUserProfile} alt={currentUserName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      </div>
+                    )}
                   </div>
                 );
               })}

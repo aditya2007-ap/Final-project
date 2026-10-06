@@ -730,10 +730,12 @@ const ClientReviewBids = () => {
           bidId={chatPartner?._id}
           partnerName={chatPartner?.user_name || chatPartner?.user_email || 'Freelancer'}
           partnerRole="Freelancer"
+          partnerProfile={chatPartner?.user_profile}
           receiverId={chatPartner?.userId}
           currentUserId={clientInfo?._id || clientInfo?.id || project?.clientId || project?.client}
           currentUserName={clientInfo?.name || 'Client'}
           currentUserRole="client"
+          currentUserProfile={clientInfo?.profile}
         />
       )}
     </div>

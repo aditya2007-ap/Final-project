@@ -78,10 +78,40 @@ const UserBids = () => {
                   return (
                     <tr key={item?._id}>
                       <td>
-                        <div className="fw-bold text-dark">{item?.title || 'Untitled Project'}</div>
-                        <small className="text-muted d-block">
-                          Employer: {item?.clientName || 'Client'}
-                        </small>
+                        <div className="d-flex align-items-center gap-2">
+                          <div
+                            style={{
+                              width: 32,
+                              height: 32,
+                              borderRadius: '50%',
+                              overflow: 'hidden',
+                              background: '#e0e7ff',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              fontSize: '0.75rem',
+                              fontWeight: 700,
+                              color: '#4338ca',
+                              flexShrink: 0
+                            }}
+                          >
+                            {item?.clientProfile ? (
+                              <img
+                                src={item.clientProfile}
+                                alt={item?.clientName || 'Client'}
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                              />
+                            ) : (
+                              (item?.clientName || 'C')[0].toUpperCase()
+                            )}
+                          </div>
+                          <div>
+                            <div className="fw-bold text-dark">{item?.title || 'Untitled Project'}</div>
+                            <small className="text-muted d-block">
+                              Employer: {item?.clientName || 'Client'}
+                            </small>
+                          </div>
+                        </div>
                       </td>
                       <td className="fw-semibold text-muted">₹{item?.budget || '—'}</td>
                       <td className="fw-bold text-success">₹{item?.amount || '—'}</td>
@@ -165,10 +195,12 @@ const UserBids = () => {
           bidId={activeChatBid?._id}
           partnerName={activeChatBid?.clientName || 'Client'}
           partnerRole="Client"
+          partnerProfile={activeChatBid?.clientProfile}
           receiverId={activeChatBid?.clientId}
           currentUserId={userInfo?._id}
           currentUserName={userInfo?.name || 'Freelancer'}
           currentUserRole="user"
+          currentUserProfile={userInfo?.profile}
         />
       )}
     </div>
